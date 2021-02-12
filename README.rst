@@ -1,9 +1,7 @@
 Auxiliary
 =========
 
-Auxiliary is a Python library implementing various algorithms and data structures.
-
-The full documentation is available at `read the docs <https://auxiliary.readthedocs.io/>`_.
+Auxiliary is a Python package implementing various algorithms and data structures.
 
 
 License
