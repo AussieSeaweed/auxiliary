@@ -8,7 +8,7 @@ setup(
     version='0.0.1.dev1',
     author='Juho Kim',
     author_email='juho-kim@outlook.com',
-    description='A Python library implementing various algorithms and data structures',
+    description='A Python package implementing various algorithms and data structures',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     url='https://github.com/AussieSeaweed/auxiliary',
