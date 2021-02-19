@@ -1,4 +1,4 @@
-from auxiliary.statistics.averages import mean, tr_mean, median
-from auxiliary.statistics.variabilities import var, rng, std_dev
+from auxiliary.statistics.averages import mean, trimmed_mean, median
+from auxiliary.statistics.variabilities import variance, range, standard_deviation
 
-__all__ = ['mean', 'tr_mean', 'median', 'var', 'rng', 'std_dev']
+__all__ = ['mean', 'trimmed_mean', 'median', 'variance', 'range', 'standard_deviation']

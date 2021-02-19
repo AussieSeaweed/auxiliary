@@ -1,15 +1,17 @@
+from math import sqrt
+
 from auxiliary.statistics.averages import mean
 
 
-def rng(values):
+def range(values):
     return max(values) - min(values)
 
 
-def var(values):
+def variance(values):
     mean_value = mean(values)
 
     return sum((value - mean_value) ** 2 for value in values) / (len(values) - 1)
 
 
-def std_dev(values):
-    return var(values) ** 0.5
+def standard_deviation(values):
+    return sqrt(variance(values))

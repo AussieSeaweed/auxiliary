@@ -1,10 +1,10 @@
 import unittest
 
-from auxiliary.statistics import mean, median, tr_mean, rng, var, std_dev
-from auxiliary.utils.tests.test_floats import FloatTestCase
+from auxiliary.statistics import mean, median, trimmed_mean, range, variance, standard_deviation
+from auxiliary.utils import ExtendedTestCase
 
 
-class SampleTestCase(FloatTestCase):
+class SampleTestCase(ExtendedTestCase):
     values = [
         [0.32, 0.53, 0.28, 0.37, 0.47, 0.43, 0.36, 0.42, 0.38, 0.43],
         [0.26, 0.43, 0.47, 0.49, 0.52, 0.75, 0.79, 0.86, 0.62, 0.46],
@@ -14,16 +14,17 @@ class SampleTestCase(FloatTestCase):
 
     def test_averages(self):
         self.assertSequenceAlmostEqual(list(map(mean, self.values)), [0.399, 0.565, 7.025, 3])
-        self.assertSequenceAlmostEqual(list(map(lambda seq: tr_mean(seq, 0.1), self.values)),
+        self.assertSequenceAlmostEqual(list(map(lambda seq: trimmed_mean(seq, 0.1), self.values)),
                                        [0.39750, 0.56625, 7.0225, 3])
         self.assertSequenceAlmostEqual(list(map(median, self.values)), [0.400, 0.505, 7.01, 3])
 
-    def test_variabilities(self):
-        self.assertSequenceAlmostEqual(list(map(rng, self.values)), [0.25, 0.6, 0.13, 4])
-        self.assertSequenceAlmostEqual(list(map(var, self.values)), [0.00529888888888889, 0.03487222222222222,
-                                                                     0.0019388888888888889, 2.5])
-        self.assertSequenceAlmostEqual(list(map(std_dev, self.values)), [0.07279346735036663, 0.18674105660572402,
-                                                                         0.044032816045409685, 1.5811388300841898])
+    def test_variances(self):
+        self.assertSequenceAlmostEqual(list(map(range, self.values)), [0.25, 0.6, 0.13, 4])
+        self.assertSequenceAlmostEqual(list(map(variance, self.values)), [0.00529888888888889, 0.03487222222222222,
+                                                                          0.0019388888888888889, 2.5])
+        self.assertSequenceAlmostEqual(list(map(standard_deviation, self.values)),
+                                       [0.07279346735036663, 0.18674105660572402, 0.044032816045409685,
+                                        1.5811388300841898])
 
 
 if __name__ == '__main__':

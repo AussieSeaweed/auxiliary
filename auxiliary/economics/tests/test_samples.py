@@ -1,11 +1,11 @@
-import unittest
 from math import log
+from unittest import main
 
-from auxiliary.economics import ef_int, nom_int, sub_int, cont_int
-from auxiliary.utils.tests.test_floats import FloatTestCase
+from auxiliary.economics import effective_interest, nominal_interest, subperiod_interest, continuous_interest
+from auxiliary.utils import ExtendedTestCase
 
 
-class SampleTestCase(FloatTestCase):
+class SampleTestCase(ExtendedTestCase):
     r, n, t = 0.1, 4, 2.5
 
     def test_factors(self):
@@ -13,10 +13,10 @@ class SampleTestCase(FloatTestCase):
 
     def test_ints(self):
         factors = [
-            ef_int((1 + self.r / self.n) ** self.n - 1, self.t),
-            sub_int(self.r / self.n, self.n, self.t),
-            nom_int(self.r, self.n, self.t),
-            cont_int(log((1 + self.r / self.n) ** self.n), self.t),
+            effective_interest((1 + self.r / self.n) ** self.n - 1, self.t),
+            subperiod_interest(self.r / self.n, self.n, self.t),
+            nominal_interest(self.r, self.n, self.t),
+            continuous_interest(log((1 + self.r / self.n) ** self.n), self.t),
         ]
 
         for factor in factors:
@@ -24,4 +24,4 @@ class SampleTestCase(FloatTestCase):
 
 
 if __name__ == '__main__':
-    unittest.main()
+    main()

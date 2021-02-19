@@ -5,7 +5,7 @@ def mean(values):
     return sum(values) / len(values)
 
 
-def tr_mean(values, percentage):
+def trimmed_mean(values, percentage):
     return mean(trim(sorted(values), percentage))
 
 

@@ -3,33 +3,33 @@ from math import exp
 from auxiliary.economics.factors import fgp
 
 
-def sub_to_ef(r, n):
+def subperiod_to_effective(r, n):
     return fgp(r, n) - 1
 
 
-def nom_to_ef(r, n):
-    return sub_to_ef(r / n, n)
+def nominal_to_effective(r, n):
+    return subperiod_to_effective(r / n, n)
 
 
-def cont_to_ef(r, exp=exp):
+def continuous_to_effective(r):
     return exp(r) - 1
 
 
-def simple_int(r, t):
+def simple_interest(r, t):
     return (1 + r) * t
 
 
-def ef_int(r, t):
+def effective_interest(r, t):
     return fgp(r, t)
 
 
-def sub_int(r, n, t):
-    return ef_int(sub_to_ef(r, n), t)
+def subperiod_interest(r, n, t):
+    return effective_interest(subperiod_to_effective(r, n), t)
 
 
-def nom_int(r, n, t):
-    return ef_int(nom_to_ef(r, n), t)
+def nominal_interest(r, n, t):
+    return effective_interest(nominal_to_effective(r, n), t)
 
 
-def cont_int(r, t):
-    return ef_int(cont_to_ef(r), t)
+def continuous_interest(r, t):
+    return effective_interest(continuous_to_effective(r), t)

@@ -1,6 +1,8 @@
 from auxiliary.economics.factors import fgp, pgperp, fga, pga, pgf, pgg, pggeom, agf, agp
-from auxiliary.economics.interests import (nom_int, nom_to_ef, sub_to_ef, sub_int, simple_int, ef_int, cont_int,
-                                           cont_to_ef)
+from auxiliary.economics.interests import (nominal_interest, nominal_to_effective, subperiod_to_effective,
+                                           subperiod_interest, simple_interest, effective_interest, continuous_interest,
+                                           continuous_to_effective)
 
-__all__ = ['fgp', 'pgperp', 'fga', 'pga', 'pgf', 'pgg', 'pggeom', 'agf', 'agp', 'nom_int', 'nom_to_ef', 'sub_to_ef',
-           'sub_int', 'simple_int', 'ef_int', 'cont_int', 'cont_to_ef']
+__all__ = ['fgp', 'pgperp', 'fga', 'pga', 'pgf', 'pgg', 'pggeom', 'agf', 'agp', 'nominal_interest',
+           'nominal_to_effective', 'subperiod_to_effective', 'subperiod_interest', 'simple_interest',
+           'effective_interest', 'continuous_interest', 'continuous_to_effective']

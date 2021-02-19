@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 
-class FloatTestCase(TestCase):
+class ExtendedTestCase(TestCase):
     def assertSequenceAlmostEqual(self, seq1, seq2):
         self.assertEqual(len(seq1), len(seq2))
 

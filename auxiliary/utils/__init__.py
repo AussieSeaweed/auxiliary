@@ -1,3 +1,4 @@
-from auxiliary.utils.sequence_utils import trim
+from auxiliary.utils.sequences import trim
+from auxiliary.utils.tests import ExtendedTestCase
 
-__all__ = ['trim']
+__all__ = ['trim', 'ExtendedTestCase']
