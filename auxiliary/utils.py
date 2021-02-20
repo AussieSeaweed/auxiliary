@@ -1,4 +1,5 @@
 from collections import Sequence
+from itertools import chain
 from numbers import Real
 from typing import TypeVar
 
@@ -34,4 +35,4 @@ def rotate(seq: Sequence[T], i: int) -> Sequence[T]:
     :param i: the index of rotation
     :return: the rotated sequence
     """
-    return tuple(seq[i:]) + tuple(seq[:i])
+    return tuple(chain(seq[i:], seq[:i]))
