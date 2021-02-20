@@ -1,7 +1,7 @@
 Auxiliary
 =========
 
-Auxiliary is a Python package implementing various algorithms and data structures.
+Auxiliary is a Python package implementing various helper and utility functions.
 
 
 License
