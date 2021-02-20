@@ -4,6 +4,8 @@ from unittest import TestCase
 
 
 class ExtendedTestCase(TestCase):
+    """ExtendedTestCase is the class for extended test cases"""
+
     def assertSequenceAlmostEqual(self, seq1: Sequence[Any], seq2: Sequence[Any]) -> None:
         """Checks if elements in both sequences are almost equal.
 

@@ -13,6 +13,7 @@ setup(
     long_description_content_type='text/x-rst',
     url='https://github.com/AussieSeaweed/auxiliary',
     packages=find_packages(),
+    package_data={'auxiliary': ['py.typed']},
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
