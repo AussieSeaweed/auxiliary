@@ -3,7 +3,7 @@ from functools import reduce
 from itertools import chain
 from numbers import Real
 from operator import add, gt, lt, mul
-from typing import Iterable, Optional, TypeVar
+from typing import Iterable, TypeVar
 
 T = TypeVar('T')
 
@@ -58,7 +58,7 @@ def product(it: Iterable[T]) -> T:
     return reduce(mul, it)
 
 
-def limit(v: T, *, lower: Optional[T] = None, upper: Optional[T] = None) -> T:
+def limit(v: T, lower: T, upper: T) -> T:
     """Binds the value by the given interval.
 
     :param v: the value to bind
@@ -66,12 +66,12 @@ def limit(v: T, *, lower: Optional[T] = None, upper: Optional[T] = None) -> T:
     :param upper: the upper limit
     :return: the bound value
     """
-    if lower is not None and upper is not None and gt(lower, upper):
+    if gt(lower, upper):
         raise ValueError('Lower bound is greater than the upper bound')
 
-    if lower is not None and lt(v, lower):
+    if lt(v, lower):
         return lower
-    elif upper is not None and lt(upper, v):
+    elif lt(upper, v):
         return upper
     else:
         return v
