@@ -2,8 +2,8 @@ from collections import Sequence
 from functools import reduce
 from itertools import chain
 from numbers import Real
-from operator import add, mul
-from typing import Iterable, TypeVar
+from operator import add, gt, lt, mul
+from typing import Iterable, Optional, TypeVar
 
 T = TypeVar('T')
 
@@ -56,3 +56,22 @@ def product(it: Iterable[T]) -> T:
     :return: the product of the elements
     """
     return reduce(mul, it)
+
+
+def limit(v: T, *, lower: Optional[T] = None, upper: Optional[T] = None) -> T:
+    """Binds the value by the given interval.
+
+    :param v: the value to bind
+    :param lower: the lower limit
+    :param upper: the upper limit
+    :return: the bound value
+    """
+    if lower is not None and upper is not None and gt(lower, upper):
+        raise ValueError('Lower bound is greater than the upper bound')
+
+    if lower is not None and lt(v, lower):
+        return lower
+    elif upper is not None and lt(upper, v):
+        return upper
+    else:
+        return v
