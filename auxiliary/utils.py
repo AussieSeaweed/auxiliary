@@ -1,7 +1,9 @@
 from collections import Sequence
+from functools import reduce
 from itertools import chain
 from numbers import Real
-from typing import TypeVar
+from operator import add, mul
+from typing import Iterable, TypeVar
 
 T = TypeVar('T')
 
@@ -36,3 +38,21 @@ def rotate(seq: Sequence[T], i: int) -> Sequence[T]:
     :return: the rotated sequence
     """
     return tuple(chain(seq[i:], seq[:i]))
+
+
+def sum(it: Iterable[T]) -> T:
+    """Calculates the sum of the elements in the iterable.
+
+    :param it: the iterable
+    :return: the sum of the elements
+    """
+    return reduce(add, it)
+
+
+def product(it: Iterable[T]) -> T:
+    """Calculates the product of the elements in the iterable.
+
+    :param it: the iterable
+    :return: the product of the elements
+    """
+    return reduce(mul, it)
