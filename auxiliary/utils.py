@@ -1,14 +1,13 @@
 from collections import Sequence
 from functools import reduce
 from itertools import chain
-from numbers import Real
 from operator import add, gt, lt, mul
 from typing import Iterable, TypeVar
 
 T = TypeVar('T')
 
 
-def trim(seq: Sequence[T], percentage: Real) -> Sequence[T]:
+def trim(seq: Sequence[T], percentage: float) -> Sequence[T]:
     """Trims the sequence by the percentage.
 
     :param seq: the sequence to be trimmed
