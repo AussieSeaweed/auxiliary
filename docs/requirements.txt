@@ -1,5 +1,4 @@
 mypy
-pycodestyle
 sphinx
 sphinx-rtd-theme
 twine
