@@ -74,3 +74,14 @@ def limit(v: T, lower: T, upper: T) -> T:
         return upper
     else:
         return v
+
+
+def constant(it: Iterable[T]) -> bool:
+    """Checks if all elements inside the iterable are equal to each other.
+
+    If the iterable is empty, True is returned.
+
+    :param it: the iterable
+    :return: True if all elements are equal, else False
+    """
+    return len(set(it)) <= 1
