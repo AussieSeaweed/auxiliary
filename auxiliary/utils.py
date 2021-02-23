@@ -39,7 +39,7 @@ def rotate(seq: Sequence[T], i: int) -> Sequence[T]:
     return tuple(chain(seq[i:], seq[:i]))
 
 
-def sum(it: Iterable[T]) -> T:
+def sum_(it: Iterable[T]) -> T:
     """Calculates the sum of the elements in the iterable.
 
     :param it: the iterable
