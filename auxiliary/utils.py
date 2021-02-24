@@ -39,6 +39,16 @@ def rotate(seq: Sequence[T], i: int) -> Iterable[T]:
     return chain(seq[i:], seq[:i])
 
 
+def seq_equal(seq1: Sequence[T], seq2: Sequence[T]) -> bool:
+    """Checks if all elements in both sequences are equal to the elements in the other sequence at the same position.
+
+    :param seq1: the first sequence
+    :param seq2: the second sequence
+    :return: True if the equality check passes, else False
+    """
+    return len(seq1) == len(seq2) and all(x == y for x, y in zip(seq1, seq2))
+
+
 def sum_(it: Iterable[T]) -> T:
     """Calculates the sum of the elements in the iterable.
 
