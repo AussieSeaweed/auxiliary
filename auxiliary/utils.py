@@ -19,24 +19,24 @@ def trim(seq: Sequence[T], percentage: float) -> Sequence[T]:
     return seq[n:len(seq) - n]
 
 
-def window(seq: Sequence[T], n: int) -> Sequence[Sequence[T]]:
+def window(seq: Sequence[T], n: int) -> Iterable[Sequence[T]]:
     """Returns the sliding window views of the supplied sequence
 
     :param seq: the sequence to be operated on
     :param n: the width of the sliding window
     :return: the window views
     """
-    return tuple(seq[i:i + n] for i in range(len(seq) - n + 1))
+    return (seq[i:i + n] for i in range(len(seq) - n + 1))
 
 
-def rotate(seq: Sequence[T], i: int) -> Sequence[T]:
+def rotate(seq: Sequence[T], i: int) -> Iterable[T]:
     """Rotates the sequence by the given index.
 
     :param seq: the sequence to rotate
     :param i: the index of rotation
-    :return: the rotated sequence
+    :return: the rotated iterable
     """
-    return tuple(chain(seq[i:], seq[:i]))
+    return chain(seq[i:], seq[:i])
 
 
 def sum_(it: Iterable[T]) -> T:
