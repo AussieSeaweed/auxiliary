@@ -48,6 +48,20 @@ def rotate(it: Iterable[T], i: int) -> Iterable[T]:
         return rotate(tuple(it), i)
 
 
+def constant(it: Iterable[T]) -> bool:
+    """Checks if all elements inside the iterable are equal to each other.
+
+    If the iterable is empty, True is returned.
+
+    :param it: the iterable
+    :return: True if all elements are equal, else False
+    """
+    if isinstance(it, Sequence):
+        return not it or all(x == it[0] for x in it)
+    else:
+        return constant(tuple(it))
+
+
 def iter_equal(it1: Iterable[T], it2: Iterable[T]) -> bool:
     """Checks if all elements in both iterables are equal to the elements in the other iterable at the same position.
 
@@ -102,14 +116,3 @@ def limit(v: T, lower: T, upper: T) -> T:
         return upper
     else:
         return v
-
-
-def constant(it: Iterable[T]) -> bool:
-    """Checks if all elements inside the iterable are equal to each other.
-
-    If the iterable is empty, True is returned.
-
-    :param it: the iterable
-    :return: True if all elements are equal, else False
-    """
-    return len(set(it)) <= 1

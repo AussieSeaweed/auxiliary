@@ -1,4 +1,4 @@
-from itertools import chain, zip_longest
+from itertools import chain
 from unittest import main
 
 from auxiliary.tests.utils import ExtendedTestCase
@@ -14,14 +14,10 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertIterableEqual(trim(iter([1, 2, 3]), 1 / 3), [2])
 
     def test_window(self) -> None:
-        for x, y in zip(window(range(6), 3), [[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]]):
-            self.assertSequenceEqual(x, y)
-        for x, y in zip(window(range(6), 6), [[0, 1, 2, 3, 4, 5]]):
-            self.assertSequenceEqual(x, y)
-        for x, y in zip(window(iter(range(6)), 7), [[0, 1, 2, 3, 4, 5]]):
-            self.assertSequenceEqual(x, y)
-        for x, y in zip_longest(window([1, 2, 3, 4, 5, 6], 0), [[], [], [], [], [], [], []], fillvalue=None):
-            self.assertSequenceEqual(x, y)
+        self.assertIterableEqual(map(list, window(range(6), 3)), [[0, 1, 2], [1, 2, 3], [2, 3, 4], [3, 4, 5]])
+        self.assertIterableEqual(map(list, window(range(6), 6)), [[0, 1, 2, 3, 4, 5]])
+        self.assertIterableEqual(map(list, window(iter(range(6)), 7)), [])
+        self.assertIterableEqual(window([1, 2, 3, 4, 5, 6], 0), [[], [], [], [], [], [], []])
 
     def test_rotate(self) -> None:
         self.assertIterableEqual(rotate(range(6), -1), [5, 0, 1, 2, 3, 4])
@@ -53,6 +49,7 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertTrue(constant([1, 1, 1]))
         self.assertTrue(constant(()))
         self.assertFalse(constant(iter(range(10))))
+        self.assertTrue(constant([[1, 1], [1, 1]]))
 
 
 if __name__ == '__main__':
