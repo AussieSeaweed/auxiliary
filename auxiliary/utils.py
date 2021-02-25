@@ -2,7 +2,7 @@ from collections import Iterable, Iterator, Sequence
 from functools import reduce
 from itertools import chain
 from operator import add, lt, mul
-from typing import TypeVar
+from typing import Optional, TypeVar
 
 T = TypeVar('T')
 
@@ -116,3 +116,15 @@ def limit(v: T, lower: T, upper: T) -> T:
         return upper
     else:
         return v
+
+
+def next_or_none(it: Iterator[T]) -> Optional[T]:
+    """Tries to get the next element of the iterator.
+
+    :param it: the iterable to consume
+    :return: None if there is no next element, else the next element
+    """
+    try:
+        return next(it)
+    except StopIteration:
+        return None
