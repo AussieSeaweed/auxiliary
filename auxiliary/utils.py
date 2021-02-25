@@ -1,4 +1,4 @@
-from collections import Sequence, Iterable
+from collections import Iterable, Iterator, Sequence
 from functools import reduce
 from itertools import chain
 from operator import add, lt, mul
@@ -22,7 +22,7 @@ def trim(it: Iterable[T], percentage: float) -> Sequence[T]:
         return trim(tuple(it), percentage)
 
 
-def window(it: Iterable[T], n: int) -> Iterable[Sequence[T]]:
+def window(it: Iterable[T], n: int) -> Iterator[Sequence[T]]:
     """Returns the sliding window views of the supplied iterable
 
     :param it: the iterable to be operated on
@@ -35,7 +35,7 @@ def window(it: Iterable[T], n: int) -> Iterable[Sequence[T]]:
         return window(tuple(it), n)
 
 
-def rotate(it: Iterable[T], i: int) -> Iterable[T]:
+def rotate(it: Iterable[T], i: int) -> Iterator[T]:
     """Rotates the iterable by the given index.
 
     :param it: the iterable to rotate
