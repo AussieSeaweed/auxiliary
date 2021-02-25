@@ -1,8 +1,8 @@
-from collections import Sequence
+from collections import Sequence, Iterable
 from functools import reduce
 from itertools import chain
 from operator import add, lt, mul
-from typing import Iterable, TypeVar
+from typing import TypeVar
 
 T = TypeVar('T')
 
