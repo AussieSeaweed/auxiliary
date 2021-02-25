@@ -1,52 +1,64 @@
 from collections import Sequence
 from functools import reduce
 from itertools import chain
-from operator import add, gt, lt, mul
+from operator import add, lt, mul
 from typing import Iterable, TypeVar
 
 T = TypeVar('T')
 
 
-def trim(seq: Sequence[T], percentage: float) -> Sequence[T]:
-    """Trims the sequence by the percentage.
+def trim(it: Iterable[T], percentage: float) -> Sequence[T]:
+    """Trims the iterable by the percentage.
 
-    :param seq: the sequence to be trimmed
+    :param it: the iterable to be trimmed
     :param percentage: the percentage to trim
     :return: the trimmed sequence
     """
-    n = int(len(seq) * percentage)
+    if isinstance(it, Sequence):
+        n = int(len(it) * percentage)
 
-    return seq[n:len(seq) - n]
+        return it[n:len(it) - n]
+    else:
+        return trim(tuple(it), percentage)
 
 
-def window(seq: Sequence[T], n: int) -> Iterable[Sequence[T]]:
-    """Returns the sliding window views of the supplied sequence
+def window(it: Iterable[T], n: int) -> Iterable[Sequence[T]]:
+    """Returns the sliding window views of the supplied iterable
 
-    :param seq: the sequence to be operated on
+    :param it: the iterable to be operated on
     :param n: the width of the sliding window
     :return: the window views
     """
-    return (seq[i:i + n] for i in range(len(seq) - n + 1))
+    if isinstance(it, Sequence):
+        return (it[i:i + n] for i in range(len(it) - n + 1))
+    else:
+        return window(tuple(it), n)
 
 
-def rotate(seq: Sequence[T], i: int) -> Iterable[T]:
-    """Rotates the sequence by the given index.
+def rotate(it: Iterable[T], i: int) -> Iterable[T]:
+    """Rotates the iterable by the given index.
 
-    :param seq: the sequence to rotate
+    :param it: the iterable to rotate
     :param i: the index of rotation
     :return: the rotated iterable
     """
-    return chain(seq[i:], seq[:i])
+    if isinstance(it, Sequence):
+        return chain(it[i:], it[:i])
+    else:
+        return rotate(tuple(it), i)
 
 
-def seq_equal(seq1: Sequence[T], seq2: Sequence[T]) -> bool:
-    """Checks if all elements in both sequences are equal to the elements in the other sequence at the same position.
+def iter_equal(it1: Iterable[T], it2: Iterable[T]) -> bool:
+    """Checks if all elements in both iterables are equal to the elements in the other iterable at the same position.
 
-    :param seq1: the first sequence
-    :param seq2: the second sequence
+    :param it1: the first iterable
+    :param it2: the second iterable
     :return: True if the equality check passes, else False
     """
-    return len(seq1) == len(seq2) and all(x == y for x, y in zip(seq1, seq2))
+    if isinstance(it1, Sequence) and isinstance(it2, Sequence):
+        return len(it1) == len(it2) and all(x == y for x, y in zip(it1, it2))
+    else:
+        return iter_equal(tuple(it1), tuple(it2))
 
 
 def sum_(it: Iterable[T]) -> T:
@@ -55,7 +67,10 @@ def sum_(it: Iterable[T]) -> T:
     :param it: the iterable
     :return: the sum of the elements
     """
-    return reduce(add, it)
+    try:
+        return reduce(add, it)
+    except TypeError:
+        raise ValueError('Invalid iterable')
 
 
 def product(it: Iterable[T]) -> T:
@@ -64,7 +79,10 @@ def product(it: Iterable[T]) -> T:
     :param it: the iterable
     :return: the product of the elements
     """
-    return reduce(mul, it)
+    try:
+        return reduce(mul, it)
+    except TypeError:
+        raise ValueError('Invalid iterable')
 
 
 def limit(v: T, lower: T, upper: T) -> T:
@@ -75,7 +93,7 @@ def limit(v: T, lower: T, upper: T) -> T:
     :param upper: the upper limit
     :return: the bound value
     """
-    if gt(lower, upper):
+    if not (lt(lower, upper) or lower == upper):
         raise ValueError('Lower bound is greater than the upper bound')
 
     if lt(v, lower):
