@@ -128,3 +128,25 @@ def next_or_none(it: Iterator[T]) -> Optional[T]:
         return next(it)
     except StopIteration:
         return None
+
+
+def default(t: Optional[T], d: T) -> T:
+    """Checks if the value is not None and returns it or the default value.
+
+    :param t: the value to check
+    :param d: the default value
+    :return: the default value if the value to check is None, else the checked value
+    """
+    return d if t is None else t
+
+
+def get(t: Optional[T]) -> T:
+    """Checks if the value is not none and returns it.
+
+    :param t: the value to check
+    :return: the checked value
+    """
+    if t is None:
+        raise TypeError('The checked value is None')
+    else:
+        return t

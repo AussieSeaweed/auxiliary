@@ -2,7 +2,8 @@ from itertools import chain
 from unittest import main
 
 from auxiliary.tests.utils import ExtendedTestCase
-from auxiliary.utils import constant, iter_equal, limit, next_or_none, product, rotate, sum_, trim, window
+from auxiliary.utils import (constant, default, get, iter_equal, limit, next_or_none, product, rotate, sum_, trim,
+                             window)
 
 
 class UtilsTestCase(ExtendedTestCase):
@@ -54,6 +55,14 @@ class UtilsTestCase(ExtendedTestCase):
     def test_next_or_none(self) -> None:
         self.assertEqual(next_or_none(iter(range(3))), 0)
         self.assertEqual(next_or_none(iter(())), None)
+
+    def test_default(self) -> None:
+        self.assertEqual(default(300, 100), 300)
+        self.assertEqual(default(None, 100), 100)
+
+    def test_get(self) -> None:
+        self.assertEqual(get(300), 300)
+        self.assertRaises(TypeError, get, None)
 
 
 if __name__ == '__main__':
