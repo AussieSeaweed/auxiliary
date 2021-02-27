@@ -2,7 +2,8 @@ from itertools import chain
 from unittest import main
 
 from auxiliary.tests.utils import ExtendedTestCase
-from auxiliary.utils import (constant, default, get, iter_equal, limit, next_or_none, product, rotate, sum_, trim,
+from auxiliary.utils import (chunk, constant, default, get, iter_equal, limit, next_or_none, product, rotate, sum_,
+                             trim,
                              window)
 
 
@@ -25,6 +26,18 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertIterableEqual(rotate(range(6), 0), range(6))
         self.assertIterableEqual(rotate(iter(range(6)), 2), chain(range(2, 6), range(2)))
 
+    def test_constant(self) -> None:
+        self.assertTrue(constant([1, 1, 1]))
+        self.assertTrue(constant(()))
+        self.assertFalse(constant(iter(range(10))))
+        self.assertTrue(constant([[1, 1], [1, 1]]))
+
+    def test_chunk(self) -> None:
+        self.assertIterableEqual(chunk(range(7), 3), [range(3), range(3, 6), range(6, 7)])
+        self.assertIterableEqual(chunk([1, 2, 3, 4, 5], 2), [[1, 2], [3, 4], [5]])
+        self.assertIterableEqual(chunk([1, 2, 3, 4, 5], 1), [[1], [2], [3], [4], [5]])
+        self.assertIterableEqual(map(list, chunk(iter([1, 2, 3, 4, 5]), 1)), [[1], [2], [3], [4], [5]])
+
     def test_iter_equal(self) -> None:
         self.assertTrue(iter_equal(range(6), iter(range(6))))
         self.assertTrue(iter_equal([0, 1, 2], (0, 1, 2)))
@@ -45,12 +58,6 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertEqual(limit(-100, 0, 2), 0)
         self.assertEqual(limit(100, 0, 2), 2)
         self.assertRaises(ValueError, limit, 100, 2, 0)
-
-    def test_constant(self) -> None:
-        self.assertTrue(constant([1, 1, 1]))
-        self.assertTrue(constant(()))
-        self.assertFalse(constant(iter(range(10))))
-        self.assertTrue(constant([[1, 1], [1, 1]]))
 
     def test_next_or_none(self) -> None:
         self.assertEqual(next_or_none(iter(range(3))), 0)

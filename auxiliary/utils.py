@@ -62,6 +62,19 @@ def constant(it: Iterable[T]) -> bool:
         return constant(tuple(it))
 
 
+def chunk(it: Iterable[T], n: int) -> Iterator[Sequence[T]]:
+    """Chunks the iterable by the given length.
+
+    :param it: the iterable to chunk
+    :param n: the chunk length
+    :return: the rotated iterable
+    """
+    if isinstance(it, Sequence):
+        return (it[i:i + n] for i in range(0, len(it), n))
+    else:
+        return chunk(tuple(it), n)
+
+
 def iter_equal(it1: Iterable[T], it2: Iterable[T]) -> bool:
     """Checks if all elements in both iterables are equal to the elements in the other iterable at the same position.
 
