@@ -1,4 +1,4 @@
-from collections import Iterable, Sequence
+from collections import Iterable, Sequence, Sized
 from typing import Any, Optional, Type
 from unittest import TestCase
 
@@ -83,7 +83,7 @@ class ExtendedTestCase(TestCase):
 
     def assert2DIterableEqual(self, it1: Iterable[Iterable[_T]], it2: Iterable[Iterable[_T]], msg: Any = ...,
                               it_type: Optional[Type[Iterable[Iterable[_T]]]] = None,
-                              sub_it_type: Optional[Type[Iterable[_T]]] = None, ) -> None:
+                              sub_it_type: Optional[Type[Iterable[_T]]] = None) -> None:
         """An equality assertion for ordered iterables of iterables (like lists and tuples).
 
         :param it1: The first iterable to compare.
@@ -99,3 +99,13 @@ class ExtendedTestCase(TestCase):
 
         for sub_it1, sub_it2 in zip(it1, it2):
             self.assertIterableEqual(sub_it1, sub_it2, msg, sub_it_type)
+
+    def assertLen(self, sized: Sized[_T], size: int, msg: Any = ...) -> None:
+        """A length assertion for sized values.
+
+        :param sized: The sized value.
+        :param size: The size.
+        :param msg: Optional message to use on failure instead of a list of differences.
+        :return: None
+        """
+        self.assertEqual(len(sized), size, msg)
