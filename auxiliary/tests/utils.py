@@ -2,6 +2,7 @@ from collections import Iterable, Sequence, Sized
 from typing import Any, Optional, Type
 from unittest import TestCase
 
+from auxiliary import ilen
 from auxiliary.types import _T
 
 
@@ -96,6 +97,8 @@ class ExtendedTestCase(TestCase):
         if it_type is not None:
             self.assertIsInstance(it1, it_type, msg)
             self.assertIsInstance(it2, it_type, msg)
+
+        self.assertEqual(ilen(it1), ilen(it2), msg)
 
         for sub_it1, sub_it2 in zip(it1, it2):
             self.assertIterableEqual(sub_it1, sub_it2, msg, sub_it_type)

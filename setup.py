@@ -5,7 +5,7 @@ with open('README.rst', 'r') as long_description_file:
 
 setup(
     name='auxiliary',
-    version='0.0.1.dev24',
+    version='0.0.1.dev25',
     author='Juho Kim',
     author_email='juho-kim@outlook.com',
     description='A Python package for various helper and utility functions',

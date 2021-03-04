@@ -46,20 +46,14 @@ def ilen(it: Iterable[Any]) -> int:
     return len(it) if isinstance(it, Sized) else len(tuple(it))
 
 
-def islice(it: Iterable[_T], start: Optional[int] = None, stop: Optional[int] = None,
-           step: Optional[int] = None) -> Iterator[_T]:
+def islice(it: Iterable[_T], *args: Optional[int]) -> Iterator[_T]:
     """Slices the given iterator.
 
     :param it: The iterable to slice.
-    :param start: The start value.
-    :param stop: The stop value.
-    :param step: The step value.
+    :param args: stop or start, stop[, step]
     :return: The sliced iterator.
     """
-    if isinstance(it, Sequence):
-        return iter(it[start:stop:step])
-    else:
-        return _islice(it, start, stop, step)
+    return iter(it[slice(*args)] if isinstance(it, Sequence) else _islice(it, *args))
 
 
 def iget(it: Iterable[_T], index: int) -> _T:
@@ -69,10 +63,7 @@ def iget(it: Iterable[_T], index: int) -> _T:
     :param index: The index.
     :return: The element at the position.
     """
-    if isinstance(it, Sequence):
-        return cast(_T, it[index])  # mypy is not happy when not casted
-    else:
-        return tuple(it)[index]
+    return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
 
 
 @retain_iter
@@ -118,7 +109,7 @@ def rotate(values: Iterable[_T], index: int) -> Iterator[_T]:
     :param index: The index of rotation.
     :return: The rotated iterator.
     """
-    return chain(islice(values, index % ilen(values)), islice(values, stop=index % ilen(values)))
+    return chain(islice(values, index % ilen(values), None), islice(values, index % ilen(values)))
 
 
 @retain_iter
