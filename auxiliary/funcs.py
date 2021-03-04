@@ -40,7 +40,7 @@ def retain_iter(func: _F) -> _F:
 def ilen(it: Iterable[Any]) -> int:
     """Gets the length of the given iterator.
 
-    :param it: The iterator.
+    :param it: The iterator to size.
     :return: The length of the iterator.
     """
     return len(it) if isinstance(it, Sized) else len(tuple(it))
@@ -48,7 +48,7 @@ def ilen(it: Iterable[Any]) -> int:
 
 def islice(it: Iterable[_T], start: Optional[int] = None, stop: Optional[int] = None,
            step: Optional[int] = None) -> Iterator[_T]:
-    """Slices the given iterator
+    """Slices the given iterator.
 
     :param it: The iterable to slice.
     :param start: The start value.
@@ -60,6 +60,19 @@ def islice(it: Iterable[_T], start: Optional[int] = None, stop: Optional[int] = 
         return iter(it[start:stop:step])
     else:
         return _islice(it, start, stop, step)
+
+
+def iget(it: Iterable[_T], index: int) -> _T:
+    """Indexes the given iterator.
+
+    :param it: The iterator to index.
+    :param index: The index.
+    :return: The element at the position.
+    """
+    if isinstance(it, Sequence):
+        return cast(_T, it[index])  # mypy is not happy when not casted
+    else:
+        return tuple(it)[index]
 
 
 @retain_iter
@@ -127,7 +140,7 @@ def const(values: Iterable[_T]) -> bool:
     :param values: The values.
     :return: True if all elements are equal, else False.
     """
-    return all(x == y for x, y in window(values, 2))
+    return all(x == iget(values, 0) for x in values)
 
 
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:
