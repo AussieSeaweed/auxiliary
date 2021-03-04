@@ -1,5 +1,5 @@
-from collections import Iterable, Iterator, Sized
-from itertools import chain, islice
+from collections import Iterable, Iterator, Sequence, Sized
+from itertools import chain, islice as _islice
 from typing import Any, Optional, cast
 
 from auxiliary.types import _F, _T
@@ -46,6 +46,22 @@ def ilen(it: Iterable[Any]) -> int:
     return len(it) if isinstance(it, Sized) else len(tuple(it))
 
 
+def islice(it: Iterable[_T], start: Optional[int] = None, stop: Optional[int] = None,
+           step: Optional[int] = None) -> Iterator[_T]:
+    """Slices the given iterator
+
+    :param it: The iterable to slice.
+    :param start: The start value.
+    :param stop: The stop value.
+    :param step: The step value.
+    :return: The sliced iterator.
+    """
+    if isinstance(it, Sequence):
+        return iter(it[start:stop:step])
+    else:
+        return _islice(it, start, stop, step)
+
+
 @retain_iter
 def chunk(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Chunks the iterable by the given width.
@@ -89,7 +105,7 @@ def rotate(values: Iterable[_T], index: int) -> Iterator[_T]:
     :param index: The index of rotation.
     :return: The rotated iterator.
     """
-    return chain(islice(values, index % ilen(values), None), islice(values, index % ilen(values)))
+    return chain(islice(values, index % ilen(values)), islice(values, stop=index % ilen(values)))
 
 
 @retain_iter
