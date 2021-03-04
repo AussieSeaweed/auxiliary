@@ -33,7 +33,8 @@ class SupportsLessThan(Protocol):
     """SupportsLessThan is the protocol for types that support less than comparison operators."""
 
     @abstractmethod
-    def __lt__(self: _T, other: _T) -> bool: ...
+    def __lt__(self: _T, other: _T) -> bool:
+        ...
 
 
 @runtime_checkable
@@ -41,4 +42,5 @@ class SupportsMul(Protocol):
     """SupportsMul is the protocol for types that support multiplication operators."""
 
     @abstractmethod
-    def __mul__(self: _T, other: _T) -> _T: ...
+    def __mul__(self: _T, other: _T) -> _T:
+        ...
