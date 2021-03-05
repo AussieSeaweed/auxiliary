@@ -23,7 +23,7 @@ class OrderedEnum(Enum):
         """
         :return: The index of the enum element.
         """
-        values: list[OrderedEnum] = list(type(self))
+        values: tuple[OrderedEnum, ...] = tuple(type(self))
 
         return values.index(self)
 
