@@ -129,7 +129,7 @@ def rotate(values: Iterable[_T], index: int) -> Iterator[_T]:
 
 
 @retain_iter
-def after(it: Iterable[_T], value: _T) -> _T:
+def after(it: Iterable[_T], value: _T, loop: bool = False) -> _T:
     """Gets the next the value inside the iterable.
 
     :param it: The iterator to get from.
@@ -139,7 +139,10 @@ def after(it: Iterable[_T], value: _T) -> _T:
     try:
         return iget(it, iindex(it, value) + 1)
     except IndexError:
-        raise ValueError('The value is the last element')
+        if loop:
+            return iget(it, 0)
+        else:
+            raise ValueError('The value is the last element')
 
 
 @retain_iter
