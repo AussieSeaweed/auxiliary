@@ -63,7 +63,23 @@ def iget(it: Iterable[_T], index: int) -> _T:
     :param index: The index.
     :return: The element at the position.
     """
-    return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
+    try:
+        return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
+    except StopIteration:
+        raise IndexError('Index out of bound')
+
+
+def iindex(it: Iterable[_T], value: _T) -> int:
+    """Gets the index of the value inside the iterable.
+
+    :param it: The iterator to index.
+    :param value: The value.
+    :return: The index of the value.
+    """
+    try:
+        return it.index(value) if isinstance(it, Sequence) else next(i for i, x in enumerate(it) if i == value)
+    except StopIteration:
+        raise ValueError('Value not in iterable')
 
 
 @retain_iter
@@ -110,6 +126,20 @@ def rotate(values: Iterable[_T], index: int) -> Iterator[_T]:
     :return: The rotated iterator.
     """
     return chain(islice(values, index % ilen(values), None), islice(values, index % ilen(values)))
+
+
+@retain_iter
+def after(it: Iterable[_T], value: _T) -> _T:
+    """Gets the next the value inside the iterable.
+
+    :param it: The iterator to get from.
+    :param value: The value.
+    :return: The next value.
+    """
+    try:
+        return iget(it, iindex(it, value) + 1)
+    except IndexError:
+        raise ValueError('The value is the last element')
 
 
 @retain_iter

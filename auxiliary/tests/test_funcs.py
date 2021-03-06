@@ -2,7 +2,8 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import ExtendedTestCase, chunk, const, default, get, iter_equal, next_or_none, rotate, trim, window
+from auxiliary import (ExtendedTestCase, after, chunk, const, default, get, iter_equal, next_or_none, rotate, trim,
+                       window)
 
 
 class FuncsTestCase(ExtendedTestCase):
@@ -29,6 +30,12 @@ class FuncsTestCase(ExtendedTestCase):
         self.assertIterableEqual(rotate(range(6), -1), chain((5,), range(5)))
         self.assertIterableEqual(rotate(range(6), 0), range(6))
         self.assertIterableEqual(rotate(range(6), 2), chain(range(2, 6), range(2)))
+
+    def test_after(self) -> None:
+        self.assertEqual(after(range(6), 0), 1)
+        self.assertEqual(after(range(6), 4), 5)
+        self.assertRaises(ValueError, after, range(6), 5)
+        self.assertRaises(ValueError, after, range(6), -1)
 
     def test_iter_equal(self) -> None:
         self.assertTrue(iter_equal(range(6), range(6)))
