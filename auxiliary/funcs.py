@@ -50,7 +50,7 @@ def islice(it: Iterable[_T], *args: Optional[int]) -> Iterator[_T]:
     """Slices the given iterator.
 
     :param it: The iterable to slice.
-    :param args: stop or start, stop[, step]
+    :param args: Stop or start, stop[, step].
     :return: The sliced iterator.
     """
     return iter(it[slice(*args)] if isinstance(it, Sequence) else _islice(it, *args))
@@ -134,7 +134,7 @@ def after(it: Iterable[_T], value: _T, loop: bool = False) -> _T:
 
     :param it: The iterator to get from.
     :param value: The value.
-    :param loop: True to loop around, else False
+    :param loop: True to loop around, else False.
     :return: The next value.
     """
     try:
