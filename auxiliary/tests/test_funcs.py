@@ -2,34 +2,34 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import (ExtendedTestCase, after, chunk, const, default, get, iter_equal, next_or_none, rotate, trim,
-                       window)
+from auxiliary import (ExtendedTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated,
+                       trimmed, windowed)
 
 
 class FuncsTestCase(ExtendedTestCase):
-    def test_chunk(self) -> None:
-        self.assert2DIterableEqual(chunk(range(7), 3), (range(3), range(3, 6), range(6, 7)))
-        self.assert2DIterableEqual(chunk(range(5), 2), (range(2), range(2, 4), range(4, 5)))
-        self.assert2DIterableEqual(chunk(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
-        self.assert2DIterableEqual(chunk(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
+    def test_chunked(self) -> None:
+        self.assert2DIterableEqual(chunked(range(7), 3), (range(3), range(3, 6), range(6, 7)))
+        self.assert2DIterableEqual(chunked(range(5), 2), (range(2), range(2, 4), range(4, 5)))
+        self.assert2DIterableEqual(chunked(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
+        self.assert2DIterableEqual(chunked(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
 
-    def test_window(self) -> None:
-        self.assert2DIterableEqual(window(range(6), 3), (range(3), range(1, 4), range(2, 5), range(3, 6)))
-        self.assert2DIterableEqual(window(range(6), 6), (range(6),))
-        self.assert2DIterableEqual(window(range(6), 7), ())
-        self.assert2DIterableEqual(window(range(6), 0), ((), (), (), (), (), (), ()))
+    def test_windowed(self) -> None:
+        self.assert2DIterableEqual(windowed(range(6), 3), (range(3), range(1, 4), range(2, 5), range(3, 6)))
+        self.assert2DIterableEqual(windowed(range(6), 6), (range(6),))
+        self.assert2DIterableEqual(windowed(range(6), 7), ())
+        self.assert2DIterableEqual(windowed(range(6), 0), ((), (), (), (), (), (), ()))
 
-    def test_trim(self) -> None:
-        self.assertIterableEqual(trim(range(10), 0), range(10))
-        self.assertIterableEqual(trim(range(10), 0.1), range(1, 9))
-        self.assertIterableEqual(trim(range(5), 0.1), range(5))
-        self.assertIterableEqual(trim(range(10), 0.5), ())
-        self.assertIterableEqual(trim(iter((1, 2, 3)), 1 / 3), (2,))
+    def test_trimmed(self) -> None:
+        self.assertIterableEqual(trimmed(range(10), 0), range(10))
+        self.assertIterableEqual(trimmed(range(10), 0.1), range(1, 9))
+        self.assertIterableEqual(trimmed(range(5), 0.1), range(5))
+        self.assertIterableEqual(trimmed(range(10), 0.5), ())
+        self.assertIterableEqual(trimmed(iter((1, 2, 3)), 1 / 3), (2,))
 
-    def test_rotate(self) -> None:
-        self.assertIterableEqual(rotate(range(6), -1), chain((5,), range(5)))
-        self.assertIterableEqual(rotate(range(6), 0), range(6))
-        self.assertIterableEqual(rotate(range(6), 2), chain(range(2, 6), range(2)))
+    def test_rotated(self) -> None:
+        self.assertIterableEqual(rotated(range(6), -1), chain((5,), range(5)))
+        self.assertIterableEqual(rotated(range(6), 0), range(6))
+        self.assertIterableEqual(rotated(range(6), 2), chain(range(2, 6), range(2)))
 
     def test_after(self) -> None:
         self.assertEqual(after(range(6), 0), 1)

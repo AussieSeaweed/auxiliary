@@ -83,7 +83,7 @@ def iindex(it: Iterable[_T], value: _T) -> int:
 
 
 @retain_iter
-def chunk(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
+def chunked(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Chunks the iterable by the given width.
 
     :param values: The values to chunk.
@@ -94,7 +94,7 @@ def chunk(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
 
 
 @retain_iter
-def window(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
+def windowed(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Returns the sliding window views of the supplied iterable.
 
     :param values: The values to generate the views on.
@@ -105,7 +105,7 @@ def window(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
 
 
 @retain_iter
-def trim(values: Iterable[_T], percentage: float) -> Iterator[_T]:
+def trimmed(values: Iterable[_T], percentage: float) -> Iterator[_T]:
     """Trims the iterable by the percentage.
 
     :param values: The values to trim.
@@ -118,7 +118,7 @@ def trim(values: Iterable[_T], percentage: float) -> Iterator[_T]:
 
 
 @retain_iter
-def rotate(values: Iterable[_T], index: int) -> Iterator[_T]:
+def rotated(values: Iterable[_T], index: int) -> Iterator[_T]:
     """Rotates the iterable by the given index.
 
     :param values: The values to rotate.
