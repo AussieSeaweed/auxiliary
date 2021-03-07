@@ -17,7 +17,7 @@ class ExtendedTestCase(TestCase):
         :param it2: The second iterable to compare.
         :param msg: Optional message to use on failure instead of a list of differences.
         :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
-        :return: None
+        :return: None.
         """
         if it_type is not None:
             self.assertIsInstance(it1, it_type, msg)
@@ -44,7 +44,7 @@ class ExtendedTestCase(TestCase):
         :param msg: Optional message to use on failure instead of a list of differences.
         :param delta: The delta to enforce.
         :param seq_type: The expected datatype of the sequences, or None if no datatype should be enforced.
-        :return: None
+        :return: None.
         """
         if seq_type is not None:
             self.assertIsInstance(seq1, seq_type, msg)
@@ -74,7 +74,7 @@ class ExtendedTestCase(TestCase):
         :param msg: Optional message to use on failure instead of a list of differences.
         :param delta: The delta to enforce.
         :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
-        :return: None
+        :return: None.
         """
         if it_type is not None:
             self.assertIsInstance(it1, it_type, msg)
@@ -92,7 +92,7 @@ class ExtendedTestCase(TestCase):
         :param msg: Optional message to use on failure instead of a list of differences.
         :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
         :param sub_it_type: The expected datatype of the sub-iterables, or None if no datatype should be enforced.
-        :return: None
+        :return: None.
         """
         if it_type is not None:
             self.assertIsInstance(it1, it_type, msg)
@@ -109,6 +109,6 @@ class ExtendedTestCase(TestCase):
         :param sized: The sized value.
         :param size: The size.
         :param msg: Optional message to use on failure instead of a list of differences.
-        :return: None
+        :return: None.
         """
         self.assertEqual(len(sized), size, msg)
