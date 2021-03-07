@@ -1,4 +1,4 @@
-from collections import Iterable, Sequence, Sized
+from collections.abc import Iterable, Sequence, Sized
 from typing import Any, Optional, Type
 from unittest import TestCase
 

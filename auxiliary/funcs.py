@@ -1,4 +1,4 @@
-from collections import Iterable, Iterator, Sequence, Sized
+from collections.abc import Iterable, Iterator, Sequence, Sized
 from itertools import chain, islice as _islice
 from typing import Any, Optional, cast
 
@@ -134,6 +134,7 @@ def after(it: Iterable[_T], value: _T, loop: bool = False) -> _T:
 
     :param it: The iterator to get from.
     :param value: The value.
+    :param loop: True to loop around, else False
     :return: The next value.
     """
     try:

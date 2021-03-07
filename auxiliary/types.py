@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from collections import Callable
+from collections.abc import Callable
 from enum import Enum
 from functools import cached_property, total_ordering
 from typing import Any, Protocol, TypeVar, runtime_checkable
