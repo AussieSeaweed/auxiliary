@@ -56,7 +56,7 @@ def islice(it: Iterable[_T], *args: Optional[int]) -> Iterator[_T]:
     return iter(it[slice(*args)] if isinstance(it, Sequence) else _islice(it, *args))
 
 
-def iget(it: Iterable[_T], index: int) -> _T:
+def iindex(it: Iterable[_T], index: int) -> _T:
     """Indexes the given iterator.
 
     :param it: The iterator to index.
@@ -67,19 +67,6 @@ def iget(it: Iterable[_T], index: int) -> _T:
         return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
     except StopIteration:
         raise IndexError('Index out of bound')
-
-
-def iindex(it: Iterable[_T], value: _T) -> int:
-    """Gets the index of the value inside the iterable.
-
-    :param it: The iterator to index.
-    :param value: The value.
-    :return: The index of the value.
-    """
-    try:
-        return it.index(value) if isinstance(it, Sequence) else next(i for i, x in enumerate(it) if i == value)
-    except StopIteration:
-        raise ValueError('Value not in iterable')
 
 
 @retain_iter
@@ -138,10 +125,10 @@ def after(it: Iterable[_T], value: _T, loop: bool = False) -> _T:
     :return: The next value.
     """
     try:
-        return iget(it, iindex(it, value) + 1)
+        return iindex(it, tuple(it).index(value) + 1)
     except IndexError:
         if loop:
-            return iget(it, 0)
+            return iindex(it, 0)
         else:
             raise ValueError('The value is the last element')
 
@@ -165,7 +152,7 @@ def const(values: Iterable[_T]) -> bool:
     :param values: The values.
     :return: True if all elements are equal, else False.
     """
-    return all(x == iget(values, 0) for x in values)
+    return all(x == iindex(values, 0) for x in values)
 
 
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:
