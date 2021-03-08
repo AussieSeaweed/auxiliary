@@ -1,3 +1,3 @@
-from auxiliary.tests.utils import ExtendedTestCase
+from auxiliary.tests.utils import ExtTestCase
 
-__all__ = ['ExtendedTestCase']
+__all__ = 'ExtTestCase',

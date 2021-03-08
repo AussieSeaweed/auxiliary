@@ -6,8 +6,8 @@ from auxiliary import ilen
 from auxiliary.types import _T
 
 
-class ExtendedTestCase(TestCase):
-    """ExtendedTestCase is the class for extended test cases"""
+class ExtTestCase(TestCase):
+    """ExtTestCase is the class for extended test cases"""
 
     def assertIterableEqual(self, it1: Iterable[_T], it2: Iterable[_T], msg: Any = None,
                             it_type: Optional[Type[Iterable[_T]]] = None) -> None:
