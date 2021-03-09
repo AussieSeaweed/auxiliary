@@ -3,7 +3,7 @@ from typing import Any, Optional, Type
 from unittest import TestCase
 
 from auxiliary import ilen
-from auxiliary.types import _T
+from auxiliary.typing import _T
 
 
 class ExtTestCase(TestCase):

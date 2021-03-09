@@ -33,4 +33,5 @@ class SupportsLessThan(Protocol):
     """SupportsLessThan is the protocol for types that support less than comparison operators."""
 
     @abstractmethod
-    def __lt__(self, other: Any) -> bool: ...
+    def __lt__(self, other: Any) -> bool:
+        pass

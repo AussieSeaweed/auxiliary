@@ -2,7 +2,7 @@ from collections.abc import Iterable, Iterator, Sequence, Sized
 from itertools import chain, islice as _islice
 from typing import Any, Optional, cast
 
-from auxiliary.types import _F, _T
+from auxiliary.typing import _F, _T
 
 
 def const_len(func: _F) -> _F:
