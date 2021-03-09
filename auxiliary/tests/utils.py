@@ -1,4 +1,4 @@
-from collections.abc import Iterable, Sequence, Sized
+from collections.abc import Iterable, Sequence
 from typing import Any, Optional, Type
 from unittest import TestCase
 
@@ -102,13 +102,3 @@ class ExtTestCase(TestCase):
 
         for sub_it1, sub_it2 in zip(it1, it2):
             self.assertIterableEqual(sub_it1, sub_it2, msg, sub_it_type)
-
-    def assertLen(self, sized: Sized, size: int, msg: Any = None) -> None:
-        """A length assertion for sized values.
-
-        :param sized: The sized value.
-        :param size: The size.
-        :param msg: Optional message to use on failure instead of a list of differences.
-        :return: None.
-        """
-        self.assertEqual(len(sized), size, msg)
