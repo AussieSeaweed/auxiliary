@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from collections.abc import Callable
 from enum import Enum
 from functools import cached_property, total_ordering
@@ -32,6 +31,5 @@ class OrderedEnum(Enum):
 class SupportsLessThan(Protocol):
     """SupportsLessThan is the protocol for types that support less than comparison operators."""
 
-    @abstractmethod
     def __lt__(self, other: Any) -> bool:
         pass

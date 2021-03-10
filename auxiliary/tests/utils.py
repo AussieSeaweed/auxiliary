@@ -2,7 +2,7 @@ from collections.abc import Iterable, Sequence
 from typing import Any, Optional, Type
 from unittest import TestCase
 
-from auxiliary import ilen
+from auxiliary.funcs import ilen, retain_iter
 from auxiliary.typing import _T
 
 
@@ -82,6 +82,7 @@ class ExtTestCase(TestCase):
 
         self.assertSequenceAlmostEqual(tuple(it1), tuple(it2), places, msg, delta)
 
+    @retain_iter
     def assert2DIterableEqual(self, it1: Iterable[Iterable[_T]], it2: Iterable[Iterable[_T]], msg: Any = None,
                               it_type: Optional[Type[Iterable[Iterable[_T]]]] = None,
                               sub_it_type: Optional[Type[Iterable[_T]]] = None) -> None:

@@ -16,7 +16,7 @@ def const_len(func: _F) -> _F:
         if const(len(arg) for arg in chain(args, kwargs.values()) if isinstance(arg, Sized)):
             return func(*args, **kwargs)
         else:
-            raise ValueError('Collection arguments are not of constant length')
+            raise ValueError('Sized arguments are not of constant length')
 
     return cast(_F, checked_func)
 
@@ -29,10 +29,11 @@ def retain_iter(func: _F) -> _F:
     """
 
     def retained_func(*args: Any, **kwargs: Any) -> Any:
-        args = tuple(tuple(arg) if isinstance(arg, Iterator) else arg for arg in args)
-        kwargs = {key: value if isinstance(value, Iterator) else tuple(value) for key, value in kwargs.items()}
-
-        return func(*args, **kwargs)
+        return func(*(
+            tuple(arg) if isinstance(arg, Iterator) else arg for arg in args
+        ), **{
+            key: tuple(value) if isinstance(value, Iterator) else value for key, value in kwargs.items()
+        })
 
     return cast(_F, retained_func)
 
@@ -144,6 +145,7 @@ def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
     return ilen(it1) == ilen(it2) and all(x == y for x, y in zip(it1, it2))
 
 
+@retain_iter
 def const(values: Iterable[_T]) -> bool:
     """Checks if all elements inside the iterable are equal to each other.
 
