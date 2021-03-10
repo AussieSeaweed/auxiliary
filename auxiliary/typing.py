@@ -7,16 +7,8 @@ _T = TypeVar('_T')
 _F = TypeVar('_F', bound=Callable[..., Any])
 
 
-@runtime_checkable
-class SupportsLessThan(Protocol):
-    """SupportsLessThan is the protocol for types that support less than comparison operators."""
-
-    def __lt__(self, other: Any) -> bool:
-        pass
-
-
 @total_ordering
-class OrderedEnum(Enum, SupportsLessThan):
+class OrderedEnum(Enum):
     """OrderedEnum is the enum class for all ordered enums."""
 
     def __lt__(self, other: Any) -> bool:
@@ -33,3 +25,11 @@ class OrderedEnum(Enum, SupportsLessThan):
         values: tuple[OrderedEnum, ...] = tuple(type(self))
 
         return values.index(self)
+
+
+@runtime_checkable
+class SupportsLessThan(Protocol):
+    """SupportsLessThan is the protocol for types that support less than comparison operators."""
+
+    def __lt__(self, other: Any) -> bool:
+        pass
