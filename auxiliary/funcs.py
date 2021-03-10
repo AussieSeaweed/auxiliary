@@ -39,7 +39,7 @@ def retain_iter(func: _F) -> _F:
 
 
 def ilen(it: Iterable[Any]) -> int:
-    """Gets the length of the given iterator.
+    """Sizes the given iterator.
 
     :param it: The iterator to size.
     :return: The length of the iterator.
@@ -62,7 +62,7 @@ def iindex(it: Iterable[_T], index: int) -> _T:
 
     :param it: The iterator to index.
     :param index: The index.
-    :return: The element at the position.
+    :return: The element at the given index.
     """
     try:
         return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
@@ -71,62 +71,62 @@ def iindex(it: Iterable[_T], index: int) -> _T:
 
 
 @retain_iter
-def chunked(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
+def chunked(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Chunks the iterable by the given width.
 
-    :param values: The values to chunk.
-    :param width: The chunk width.
+    :param it: The iterable to chunk.
+    :param width: The width of the chunks.
     :return: The chunks.
     """
-    return (islice(values, i, i + width) for i in range(0, ilen(values), width))
+    return (islice(it, i, i + width) for i in range(0, ilen(it), width))
 
 
 @retain_iter
-def windowed(values: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
+def windowed(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Returns the sliding window views of the supplied iterable.
 
-    :param values: The values to generate the views on.
+    :param it: The values to generate the window views on.
     :param width: The sliding window width.
     :return: The window views.
     """
-    return (islice(values, i, i + width) for i in range(ilen(values) - width + 1))
+    return (islice(it, i, i + width) for i in range(ilen(it) - width + 1))
 
 
 @retain_iter
-def trimmed(values: Iterable[_T], percentage: float) -> Iterator[_T]:
+def trimmed(it: Iterable[_T], percentage: float) -> Iterator[_T]:
     """Trims the iterable by the percentage.
 
-    :param values: The values to trim.
+    :param it: The values to trim.
     :param percentage: The trimmed percentage.
     :return: The trimmed sequence.
     """
-    n = int(ilen(values) * percentage)
+    n = int(ilen(it) * percentage)
 
-    return islice(values, n, ilen(values) - n)
+    return islice(it, n, ilen(it) - n)
 
 
 @retain_iter
-def rotated(values: Iterable[_T], index: int) -> Iterator[_T]:
+def rotated(it: Iterable[_T], index: int) -> Iterator[_T]:
     """Rotates the iterable by the given index.
 
-    :param values: The values to rotate.
+    :param it: The values to rotate.
     :param index: The index of rotation.
     :return: The rotated iterator.
     """
-    return chain(islice(values, index % ilen(values), None), islice(values, index % ilen(values)))
+    return chain(islice(it, index % ilen(it), None), islice(it, index % ilen(it)))
 
 
 @retain_iter
-def after(it: Iterable[_T], value: _T, loop: bool = False) -> _T:
+def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
     """Gets the next the value inside the iterable.
 
     :param it: The iterator to get from.
-    :param value: The value.
-    :param loop: True to loop around, else False.
+    :param v: The previous value.
+    :param loop: True to loop around, else False. Defaults to False.
     :return: The next value.
     """
     try:
-        return iindex(it, tuple(it).index(value) + 1)
+        return iindex(it, tuple(it).index(v) + 1)
     except IndexError:
         if loop:
             return iindex(it, 0)
@@ -146,15 +146,15 @@ def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
 
 
 @retain_iter
-def const(values: Iterable[_T]) -> bool:
+def const(it: Iterable[_T]) -> bool:
     """Checks if all elements inside the iterable are equal to each other.
 
        If the iterable is empty, True is returned.
 
-    :param values: The values.
+    :param it: The iterable.
     :return: True if all elements are equal, else False.
     """
-    return all(x == iindex(values, 0) for x in values)
+    return all(x == iindex(it, 0) for x in it)
 
 
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:

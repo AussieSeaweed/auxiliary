@@ -20,7 +20,7 @@ class OrderedEnum(Enum):
     @cached_property
     def index(self) -> int:
         """
-        :return: The index of the enum element.
+        :return: The index of this ordered enum element.
         """
         values: tuple[OrderedEnum, ...] = tuple(type(self))
 
@@ -29,7 +29,7 @@ class OrderedEnum(Enum):
 
 @runtime_checkable
 class SupportsLessThan(Protocol):
-    """SupportsLessThan is the protocol for types that support less than comparison operators."""
+    """SupportsLessThan is the protocol for types that support the less than comparison operator."""
 
     def __lt__(self, other: Any) -> bool:
         pass
