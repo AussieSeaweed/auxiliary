@@ -165,7 +165,9 @@ def unique(it: Iterable[_T]) -> bool:
     :param it: The iterable.
     :return: True if all elements are unique, else False.
     """
-    return all(x != y for x, y in windowed(sorted(it), 2))
+    it = tuple(it)
+
+    return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
 
 
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:
