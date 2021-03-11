@@ -31,5 +31,4 @@ class OrderedEnum(Enum):
 class SupportsLessThan(Protocol):
     """SupportsLessThan is the protocol for types that support the less than comparison operator."""
 
-    def __lt__(self, other: Any) -> bool:
-        pass
+    def __lt__(self, other: Any) -> bool: ...
