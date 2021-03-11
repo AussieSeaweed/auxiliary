@@ -3,7 +3,7 @@ from typing import Optional, cast
 from unittest import main
 
 from auxiliary import (ExtTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated, trimmed,
-                       windowed)
+                       unique, windowed)
 
 
 class FuncsTestCase(ExtTestCase):
@@ -52,6 +52,15 @@ class FuncsTestCase(ExtTestCase):
         self.assertTrue(const(()))
         self.assertTrue(const(((1, 1), (1, 1))))
         self.assertFalse(const(range(10)))
+        self.assertFalse(const(iter(range(10))))
+
+    def test_unique(self) -> None:
+        self.assertFalse(unique((1, 1, 1)))
+        self.assertTrue(unique(()))
+        self.assertFalse(unique(((1, 1), (1, 1), (1, 2))))
+        self.assertTrue(unique(((2, 1), (1, 1), (1, 2))))
+        self.assertTrue(unique(range(10)))
+        self.assertTrue(unique(iter(range(10))))
 
     def test_next_or_none(self) -> None:
         self.assertEqual(next_or_none(iter(range(3))), 0)

@@ -157,6 +157,17 @@ def const(it: Iterable[_T]) -> bool:
     return all(x == iindex(it, 0) for x in it)
 
 
+def unique(it: Iterable[_T]) -> bool:
+    """Checks if all elements inside the iterable are unique to each other.
+
+       If the iterable is empty, True is returned.
+
+    :param it: The iterable.
+    :return: True if all elements are unique, else False.
+    """
+    return all(x != y for x, y in windowed(sorted(it), 2))
+
+
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:
     """Tries to get the next element of the iterator.
 
