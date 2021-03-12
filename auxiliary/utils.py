@@ -1,78 +1,27 @@
-from collections.abc import Iterable, Iterator, Sequence, Sized
+from collections.abc import Iterable, Iterator, Sequence
 from functools import reduce
-from itertools import chain, islice as _islice
+from itertools import chain
 from operator import mul
-from typing import Any, Optional, cast
+from typing import Optional, cast
 
-from auxiliary.typing import _F, _SLT, _T
+from auxiliary.typing import _SLT, _T
 
 
-def const_len(func: _F) -> _F:
-    """Decorates a function to make sure all sized arguments are of the same length.
+def windowed(it: Iterable[_T], width: int, step: int = 1, partial: bool = False) -> Iterator[Iterator[_T]]:
+    """Returns the sliding window views of the supplied iterable.
 
-    :param func: The function to decorate.
-    :return: The decorated function.
+    :param it: The values to generate the window views on.
+    :param width: The sliding window width.
+    :param step: The step of the window views.
+    :param partial: Allow partial view.
+    :return: The window views.
     """
-
-    def checked_func(*args: Any, **kwargs: Any) -> Any:
-        if const(len(arg) for arg in chain(args, kwargs.values()) if isinstance(arg, Sized)):
-            return func(*args, **kwargs)
-        else:
-            raise ValueError('Sized arguments are not of constant length')
-
-    return cast(_F, checked_func)
+    if isinstance(it, Sequence):
+        return (iter(it[i:i + width]) for i in range(0, len(it) if partial else len(it) - width + 1, step))
+    else:
+        return windowed(tuple(it), width, step, partial)
 
 
-def retain_iter(func: _F) -> _F:
-    """Decorates a function to make sure all iterators are converted to sequences to persist after iterations.
-
-    :param func: The function to decorate.
-    :return: The decorated function.
-    """
-
-    def retained_func(*args: Any, **kwargs: Any) -> Any:
-        return func(*(
-            tuple(arg) if isinstance(arg, Iterator) else arg for arg in args
-        ), **{
-            key: tuple(value) if isinstance(value, Iterator) else value for key, value in kwargs.items()
-        })
-
-    return cast(_F, retained_func)
-
-
-def ilen(it: Iterable[Any]) -> int:
-    """Sizes the given iterator.
-
-    :param it: The iterator to size.
-    :return: The length of the iterator.
-    """
-    return len(it) if isinstance(it, Sized) else len(tuple(it))
-
-
-def islice(it: Iterable[_T], *args: Optional[int]) -> Iterator[_T]:
-    """Slices the given iterator.
-
-    :param it: The iterable to slice.
-    :param args: Stop or start, stop[, step].
-    :return: The sliced iterator.
-    """
-    return iter(it[slice(*args)]) if isinstance(it, Sequence) else _islice(it, *args)
-
-
-def iindex(it: Iterable[_T], index: int) -> _T:
-    """Indexes the given iterator.
-
-    :param it: The iterator to index.
-    :param index: The index.
-    :return: The element at the given index.
-    """
-    try:
-        return cast(_T, it[index]) if isinstance(it, Sequence) else next(x for i, x in enumerate(it) if i == index)
-    except StopIteration:
-        raise IndexError('Index out of bound')
-
-
-@retain_iter
 def chunked(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     """Chunks the iterable by the given width.
 
@@ -80,21 +29,9 @@ def chunked(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     :param width: The width of the chunks.
     :return: The chunks.
     """
-    return (islice(it, i, i + width) for i in range(0, ilen(it), width))
+    return windowed(it, width, width, True)
 
 
-@retain_iter
-def windowed(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
-    """Returns the sliding window views of the supplied iterable.
-
-    :param it: The values to generate the window views on.
-    :param width: The sliding window width.
-    :return: The window views.
-    """
-    return (islice(it, i, i + width) for i in range(ilen(it) - width + 1))
-
-
-@retain_iter
 def trimmed(it: Iterable[_T], percentage: float) -> Iterator[_T]:
     """Trims the iterable by the percentage.
 
@@ -102,12 +39,14 @@ def trimmed(it: Iterable[_T], percentage: float) -> Iterator[_T]:
     :param percentage: The trimmed percentage.
     :return: The trimmed sequence.
     """
-    n = int(ilen(it) * percentage)
+    if isinstance(it, Sequence):
+        n = int(len(it) * percentage)
 
-    return islice(it, n, ilen(it) - n)
+        return iter(it[n:len(it) - n])
+    else:
+        return trimmed(tuple(it), percentage)
 
 
-@retain_iter
 def rotated(it: Iterable[_T], index: int) -> Iterator[_T]:
     """Rotates the iterable by the given index.
 
@@ -115,28 +54,19 @@ def rotated(it: Iterable[_T], index: int) -> Iterator[_T]:
     :param index: The index of rotation.
     :return: The rotated iterator.
     """
-    return chain(islice(it, index % ilen(it), None), islice(it, index % ilen(it)))
+    return chain(it[index:], it[:index]) if isinstance(it, Sequence) else rotated(tuple(it), index)
 
 
-@retain_iter
-def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
+def after(it: Iterable[_T], v: _T) -> _T:
     """Gets the next the value inside the iterable.
 
     :param it: The iterator to get from.
     :param v: The previous value.
-    :param loop: True to loop around, else False. Defaults to False.
     :return: The next value.
     """
-    try:
-        return iindex(it, tuple(it).index(v) + 1)
-    except IndexError:
-        if loop:
-            return iindex(it, 0)
-        else:
-            raise ValueError('The value is the last element')
+    return cast(_T, it[(it.index(v) + 1) % len(it)]) if isinstance(it, Sequence) else after(tuple(it), v)
 
 
-@retain_iter
 def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
     """Checks if all elements in both iterables are equal to the elements in the other iterable at the same position.
 
@@ -144,10 +74,12 @@ def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
     :param it2: The second iterable.
     :return: True if the equality check passes, else False.
     """
-    return ilen(it1) == ilen(it2) and all(x == y for x, y in zip(it1, it2))
+    if isinstance(it1, Sequence) and isinstance(it2, Sequence):
+        return len(it1) == len(it2) and all(x == y for x, y in zip(it1, it2))
+    else:
+        return iter_equal(tuple(it1), tuple(it2))
 
 
-@retain_iter
 def const(it: Iterable[_T]) -> bool:
     """Checks if all elements inside the iterable are equal to each other.
 
@@ -156,7 +88,7 @@ def const(it: Iterable[_T]) -> bool:
     :param it: The iterable.
     :return: True if all elements are equal, else False.
     """
-    return all(x == iindex(it, 0) for x in it)
+    return all(x == it[0] for x in it) if isinstance(it, Sequence) else const(tuple(it))
 
 
 def unique(it: Iterable[_T]) -> bool:
@@ -167,9 +99,10 @@ def unique(it: Iterable[_T]) -> bool:
     :param it: The iterable.
     :return: True if all elements are unique, else False.
     """
-    it = tuple(it)
-
-    return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
+    if isinstance(it, Sequence):
+        return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
+    else:
+        return unique(tuple(it))
 
 
 def product(values: Iterable[_T], start: Optional[_T] = None) -> _T:

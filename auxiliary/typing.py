@@ -1,4 +1,3 @@
-from collections.abc import Callable
 from enum import Enum
 from functools import cached_property, total_ordering
 from typing import Any, Protocol, TypeVar, runtime_checkable
@@ -32,5 +31,4 @@ class SupportsLessThan(Protocol):
 
 
 _T = TypeVar('_T')
-_F = TypeVar('_F', bound=Callable[..., Any])
 _SLT = TypeVar('_SLT', bound=SupportsLessThan)
