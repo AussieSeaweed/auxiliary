@@ -1,8 +1,10 @@
 from collections.abc import Iterable, Iterator, Sequence, Sized
+from functools import reduce
 from itertools import chain, islice as _islice
+from operator import mul
 from typing import Any, Optional, cast
 
-from auxiliary.typing import _F, _T
+from auxiliary.typing import _F, _SLT, _T
 
 
 def const_len(func: _F) -> _F:
@@ -168,6 +170,37 @@ def unique(it: Iterable[_T]) -> bool:
     it = tuple(it)
 
     return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
+
+
+def product(values: Iterable[_T], start: Optional[_T] = None) -> _T:
+    """Calculates the product of the elements in the iterable.
+
+    :param values: The values to be multiplied.
+    :param start: The optional start value.
+    :return: The product of the values.
+    """
+    try:
+        return reduce(mul, values if start is None else chain((start,), values))
+    except TypeError:
+        raise ValueError('Invalid iterable')
+
+
+def bind(value: _SLT, lower: _SLT, upper: _SLT) -> _SLT:
+    """Binds the value by the given interval.
+
+    :param value: The value to be bound.
+    :param lower: The lower limit.
+    :param upper: The upper limit.
+    :return: The bound value.
+    """
+    if upper < lower:
+        raise ValueError('Lower bound is greater than the upper bound')
+    elif value < lower:
+        return lower
+    elif upper < value:
+        return upper
+    else:
+        return value
 
 
 def next_or_none(it: Iterator[_T]) -> Optional[_T]:

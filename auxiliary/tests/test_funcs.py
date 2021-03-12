@@ -2,8 +2,8 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import (ExtendedTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated,
-                       trimmed, unique, windowed)
+from auxiliary import (ExtendedTestCase, after, bind, chunked, const, default, get, iter_equal, next_or_none, product,
+                       rotated, trimmed, unique, windowed)
 
 
 class FuncsTestCase(ExtendedTestCase):
@@ -61,6 +61,19 @@ class FuncsTestCase(ExtendedTestCase):
         self.assertTrue(unique(([2, 1], [1, 1], [1, 2])))
         self.assertTrue(unique(range(10)))
         self.assertTrue(unique(iter(range(10))))
+
+    def test_product(self) -> None:
+        self.assertEqual(product(range(6)), 0)
+        self.assertEqual(product(range(1, 6)), 120)
+        self.assertEqual(product(range(1, 6), 1), 120)
+        self.assertEqual(product((), 1), 1)
+        self.assertRaises(ValueError, product, ())
+
+    def test_bind(self) -> None:
+        self.assertEqual(bind(1, 0, 2), 1)
+        self.assertEqual(bind(-100, 0, 2), 0)
+        self.assertEqual(bind(100, 0, 2), 2)
+        self.assertRaises(ValueError, bind, 100, 2, 0)
 
     def test_next_or_none(self) -> None:
         self.assertEqual(next_or_none(iter(range(3))), 0)

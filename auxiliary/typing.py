@@ -3,9 +3,6 @@ from enum import Enum
 from functools import cached_property, total_ordering
 from typing import Any, Protocol, TypeVar, runtime_checkable
 
-_T = TypeVar('_T')
-_F = TypeVar('_F', bound=Callable[..., Any])
-
 
 @total_ordering
 class OrderedEnum(Enum):
@@ -32,3 +29,8 @@ class SupportsLessThan(Protocol):
     """SupportsLessThan is the protocol for types that support the less than comparison operator."""
 
     def __lt__(self, other: Any) -> bool: ...
+
+
+_T = TypeVar('_T')
+_F = TypeVar('_F', bound=Callable[..., Any])
+_SLT = TypeVar('_SLT', bound=SupportsLessThan)
