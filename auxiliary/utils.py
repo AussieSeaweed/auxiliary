@@ -1,4 +1,4 @@
-from collections.abc import Iterable, Iterator, Sequence
+from collections.abc import Collection, Iterable, Iterator, Sequence
 from functools import reduce
 from itertools import chain
 from operator import mul
@@ -74,7 +74,7 @@ def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
     :param it2: The second iterable.
     :return: True if the equality check passes, else False.
     """
-    if isinstance(it1, Sequence) and isinstance(it2, Sequence):
+    if isinstance(it1, Collection) and isinstance(it2, Collection):
         return len(it1) == len(it2) and all(x == y for x, y in zip(it1, it2))
     else:
         return iter_equal(tuple(it1), tuple(it2))
