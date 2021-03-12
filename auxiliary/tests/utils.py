@@ -2,7 +2,7 @@ from collections.abc import Iterable
 from typing import Any, Optional, Type
 from unittest import TestCase
 
-from auxiliary.funcs import ilen, retain_iter
+from auxiliary.utils import ilen, retain_iter
 from auxiliary.typing import _T
 
 
