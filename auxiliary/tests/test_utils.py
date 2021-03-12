@@ -35,7 +35,8 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertEqual(after(iter(range(6)), 0), 1)
         self.assertEqual(after(range(6), 4), 5)
         self.assertEqual(after(range(0, 6, 2), 2), 4)
-        self.assertEqual(after(range(6), 5), 0)
+        self.assertEqual(after(range(6), 5, True), 0)
+        self.assertRaises(ValueError, after, range(6), 5)
         self.assertRaises(ValueError, after, range(6), -1)
 
     def test_iter_equal(self) -> None:

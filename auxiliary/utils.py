@@ -57,14 +57,26 @@ def rotated(it: Iterable[_T], index: int) -> Iterator[_T]:
     return chain(it[index:], it[:index]) if isinstance(it, Sequence) else rotated(tuple(it), index)
 
 
-def after(it: Iterable[_T], v: _T) -> _T:
+def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
     """Gets the next the value inside the iterable.
 
     :param it: The iterator to get from.
     :param v: The previous value.
+    :param loop: True to allow loop-around, else False.
     :return: The next value.
     """
-    return cast(_T, it[(it.index(v) + 1) % len(it)]) if isinstance(it, Sequence) else after(tuple(it), v)
+    if isinstance(it, Sequence):
+        try:
+            i = (it.index(v) + 1)
+
+            if loop:
+                i %= len(it)
+
+            return cast(_T, it[i])
+        except IndexError:
+            raise ValueError('Last element')
+    else:
+        return after(tuple(it), v, loop)
 
 
 def iter_equal(it1: Iterable[_T], it2: Iterable[_T]) -> bool:
