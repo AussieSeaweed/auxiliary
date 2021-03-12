@@ -2,11 +2,11 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import (ExtTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated, trimmed,
+from auxiliary import (ExtendedTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated, trimmed,
                        unique, windowed)
 
 
-class FuncsTestCase(ExtTestCase):
+class FuncsTestCase(ExtendedTestCase):
     def test_chunked(self) -> None:
         self.assert2DIterableEqual(chunked(range(7), 3), (range(3), range(3, 6), range(6, 7)))
         self.assert2DIterableEqual(chunked(range(5), 2), (range(2), range(2, 4), range(4, 5)))
