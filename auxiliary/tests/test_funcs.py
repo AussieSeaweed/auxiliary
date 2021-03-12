@@ -2,8 +2,8 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import (ExtendedTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated, trimmed,
-                       unique, windowed)
+from auxiliary import (ExtendedTestCase, after, chunked, const, default, get, iter_equal, next_or_none, rotated,
+                       trimmed, unique, windowed)
 
 
 class FuncsTestCase(ExtendedTestCase):

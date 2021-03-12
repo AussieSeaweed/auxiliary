@@ -2,8 +2,8 @@ from collections.abc import Iterable
 from typing import Any, Optional, Type
 from unittest import TestCase
 
-from auxiliary.utils import ilen, retain_iter
 from auxiliary.typing import _T
+from auxiliary.utils import ilen, retain_iter
 
 
 class ExtendedTestCase(TestCase):
