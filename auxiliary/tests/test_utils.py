@@ -40,8 +40,9 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertRaises(ValueError, after, range(6), -1)
 
     def test_iter_equal(self) -> None:
+        self.assertTrue(iter_equal(iter(range(6)), iter(range(6))))
         self.assertTrue(iter_equal(iter(range(6)), range(6)))
-        self.assertTrue(iter_equal([0, 1, 2], (0, 1, 2)))
+        self.assertTrue(iter_equal([0, 1, 2], iter((0, 1, 2))))
         self.assertTrue(iter_equal((), []))
         self.assertFalse(iter_equal(range(7), range(6)))
         self.assertFalse(iter_equal(range(1, 7), range(6)))
@@ -58,9 +59,16 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertFalse(unique(iter((1, 1, 1))))
         self.assertTrue(unique(()))
         self.assertFalse(unique(((1, 1), (1, 1), (1, 2))))
+        self.assertFalse(unique(([2, 1], [1, 1], [2, 1])))
         self.assertTrue(unique(([2, 1], [1, 1], [1, 2])))
         self.assertTrue(unique(range(10)))
         self.assertTrue(unique(iter(range(10))))
+
+    def test_bind(self) -> None:
+        self.assertEqual(bind(1, 0, 2), 1)
+        self.assertEqual(bind(-100, 0, 2), 0)
+        self.assertEqual(bind(100, 0, 2), 2)
+        self.assertRaises(ValueError, bind, 100, 2, 0)
 
     def test_product(self) -> None:
         self.assertEqual(product(iter(range(6))), 0)
@@ -68,12 +76,6 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertEqual(product(range(1, 6), 1), 120)
         self.assertEqual(product((), 1), 1)
         self.assertRaises(ValueError, product, ())
-
-    def test_bind(self) -> None:
-        self.assertEqual(bind(1, 0, 2), 1)
-        self.assertEqual(bind(-100, 0, 2), 0)
-        self.assertEqual(bind(100, 0, 2), 2)
-        self.assertRaises(ValueError, bind, 100, 2, 0)
 
     def test_next_or_none(self) -> None:
         self.assertEqual(next_or_none(iter(range(3))), 0)
