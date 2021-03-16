@@ -12,6 +12,9 @@ class UtilsTestCase(ExtendedTestCase):
         self.assert2DIterableEqual(windowed(range(6), 6), (range(6),))
         self.assert2DIterableEqual(windowed(range(6), 7), ())
         self.assert2DIterableEqual(windowed(range(6), 0), ((), (), (), (), (), (), ()))
+        self.assert2DIterableEqual(windowed(iter(range(6)), 3, partial=True), (
+            range(3), range(1, 4), range(2, 5), range(3, 6), range(4, 6), range(5, 6),
+        ))
 
     def test_chunked(self) -> None:
         self.assert2DIterableEqual(chunked(iter(range(7)), 3), (range(3), range(3, 6), range(6, 7)))
