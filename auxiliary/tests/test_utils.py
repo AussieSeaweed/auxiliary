@@ -3,7 +3,7 @@ from typing import Optional, cast
 from unittest import main
 
 from auxiliary import (ExtendedTestCase, after, bind, chunked, const, default, get, iter_equal, next_or_none, product,
-                       rotated, trimmed, unique, windowed)
+                       rotated, sum_, trimmed, unique, windowed)
 
 
 class UtilsTestCase(ExtendedTestCase):
@@ -72,6 +72,13 @@ class UtilsTestCase(ExtendedTestCase):
         self.assertEqual(bind(-100, 0, 2), 0)
         self.assertEqual(bind(100, 0, 2), 2)
         self.assertRaises(ValueError, bind, 100, 2, 0)
+
+    def test_sum(self) -> None:
+        self.assertEqual(sum_(iter(range(6))), 15)
+        self.assertEqual(sum_(range(1, 6)), 15)
+        self.assertEqual(sum_(range(1, 6), 1), 16)
+        self.assertEqual(sum_((), 1), 1)
+        self.assertRaises(ValueError, sum_, ())
 
     def test_product(self) -> None:
         self.assertEqual(product(iter(range(6))), 0)

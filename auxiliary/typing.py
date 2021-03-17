@@ -11,6 +11,13 @@ class SupportsLessThan(Protocol):
 
 
 @runtime_checkable
+class SupportsAdd(Protocol):
+    """SupportsAdd is the protocol for types that support the __add__ operator."""
+
+    def __add__(self: _SA, other: _SA) -> _SA: ...
+
+
+@runtime_checkable
 class SupportsMul(Protocol):
     """SupportsMul is the protocol for types that support the __mul__ operator."""
 
@@ -19,4 +26,5 @@ class SupportsMul(Protocol):
 
 _T = TypeVar('_T')
 _SLT = TypeVar('_SLT', bound=SupportsLessThan)
+_SA = TypeVar('_SA', bound=SupportsAdd)
 _SM = TypeVar('_SM', bound=SupportsMul)

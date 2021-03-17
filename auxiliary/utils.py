@@ -1,7 +1,7 @@
 from collections.abc import Collection, Hashable, Iterable, Iterator, Sequence
 from functools import reduce
 from itertools import chain
-from operator import mul
+from operator import add, mul
 from typing import Any, Optional, cast
 
 from auxiliary.typing import SupportsLessThan, _SLT, _SM, _T
@@ -151,6 +151,19 @@ def bind(value: _SLT, lower: _SLT, upper: _SLT) -> _SLT:
         return upper
     else:
         return value
+
+
+def sum_(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
+    """Calculates the sum of the elements in the iterable.
+
+    :param values: The values to be summed.
+    :param start: The optional start value.
+    :return: The sum of the values.
+    """
+    try:
+        return reduce(add, values if start is None else chain((start,), values))
+    except TypeError:
+        raise ValueError('Invalid iterable')
 
 
 def product(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
