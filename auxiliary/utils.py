@@ -32,6 +32,15 @@ def chunked(it: Iterable[_T], width: int) -> Iterator[Iterator[_T]]:
     return windowed(it, width, width, True)
 
 
+def flattened(it: Iterable[Iterable[_T]]) -> Iterator[_T]:
+    """Flattens the iterable.
+
+    :param it: The iterable to flatten.
+    :return: The flattened iterable.
+    """
+    return chain(*it)
+
+
 def trimmed(it: Iterable[_T], percentage: float) -> Iterator[_T]:
     """Trims the iterable by the percentage.
 

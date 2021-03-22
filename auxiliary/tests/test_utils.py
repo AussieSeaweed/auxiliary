@@ -2,8 +2,8 @@ from itertools import chain
 from typing import Optional, cast
 from unittest import main
 
-from auxiliary import (ExtendedTestCase, after, bind, chunked, const, default, get, iter_equal, next_or_none, product,
-                       rotated, sum_, trimmed, unique, windowed)
+from auxiliary import (ExtendedTestCase, after, bind, chunked, const, default, flattened, get, iter_equal, next_or_none,
+                       product, rotated, sum_, trimmed, unique, windowed)
 
 
 class UtilsTestCase(ExtendedTestCase):
@@ -21,6 +21,9 @@ class UtilsTestCase(ExtendedTestCase):
         self.assert2DIterableEqual(chunked(range(5), 2), (range(2), range(2, 4), range(4, 5)))
         self.assert2DIterableEqual(chunked(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
         self.assert2DIterableEqual(chunked(range(5), 1), (range(1), range(1, 2), range(2, 3), range(3, 4), range(4, 5)))
+
+    def test_flattened(self) -> None:
+        self.assertIterableEqual(flattened((range(5), range(5, 10))), range(10))
 
     def test_trimmed(self) -> None:
         self.assertIterableEqual(trimmed(iter(range(10)), 0), range(10))
