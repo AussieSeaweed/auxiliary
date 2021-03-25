@@ -8,8 +8,13 @@ from auxiliary.typing import _T
 class ExtendedTestCase(TestCase):
     """ExtendedTestCase is the class for extended test cases"""
 
-    def assertIterableEqual(self, it1: Iterable[_T], it2: Iterable[_T], msg: Any = None,
-                            it_type: Optional[Type[Iterable[_T]]] = None) -> None:
+    def assertIterableEqual(
+            self,
+            it1: Iterable[_T],
+            it2: Iterable[_T],
+            msg: Any = None,
+            it_type: Optional[Type[Iterable[_T]]] = None,
+    ) -> None:
         """An equality assertion for ordered iterables (like lists and tuples).
 
         :param it1: The first iterable to compare.
@@ -24,9 +29,15 @@ class ExtendedTestCase(TestCase):
 
         self.assertSequenceEqual(tuple(it1), tuple(it2), msg)
 
-    def assertIterableAlmostEqual(self, it1: Iterable[float], it2: Iterable[float], places: Optional[int] = None,
-                                  msg: Any = None, delta: Optional[float] = None,
-                                  it_type: Optional[Type[Iterable[float]]] = None) -> None:
+    def assertIterableAlmostEqual(
+            self,
+            it1: Iterable[float],
+            it2: Iterable[float],
+            places: Optional[int] = None,
+            msg: Any = None,
+            delta: Optional[float] = None,
+            it_type: Optional[Type[Iterable[float]]] = None,
+    ) -> None:
         """An equality assertion for ordered iterables (like lists and tuples). Fail if the any two corresponding
            objects are unequal as determined by their difference rounded to the given number of decimal places (default
            7) and comparing to zero, or by comparing that the difference between the two objects is more than the given
@@ -57,9 +68,13 @@ class ExtendedTestCase(TestCase):
 
             self.assertIterableAlmostEqual(tuple(it1), tuple(it2), places, msg, delta)
 
-    def assert2DIterableEqual(self, it1: Iterable[Iterable[_T]], it2: Iterable[Iterable[_T]], msg: Any = None,
-                              it_type: Optional[Type[Iterable[Iterable[_T]]]] = None,
-                              sub_it_type: Optional[Type[Iterable[_T]]] = None) -> None:
+    def assert2DIterableEqual(
+            self,
+            it1: Iterable[Iterable[_T]],
+            it2: Iterable[Iterable[_T]], msg: Any = None,
+            it_type: Optional[Type[Iterable[Iterable[_T]]]] = None,
+            sub_it_type: Optional[Type[Iterable[_T]]] = None,
+    ) -> None:
         """An equality assertion for ordered iterables of iterables (like lists and tuples).
 
         :param it1: The first iterable to compare.
@@ -81,10 +96,16 @@ class ExtendedTestCase(TestCase):
 
             self.assert2DIterableEqual(tuple(it1), tuple(it2), msg, sub_it_type=sub_it_type)
 
-    def assert2DIterableAlmostEqual(self, it1: Iterable[Iterable[float]], it2: Iterable[Iterable[float]],
-                                    places: Optional[int] = None, msg: Any = None, delta: Optional[float] = None,
-                                    it_type: Optional[Type[Iterable[Iterable[float]]]] = None,
-                                    sub_it_type: Optional[Type[Iterable[float]]] = None) -> None:
+    def assert2DIterableAlmostEqual(
+            self,
+            it1: Iterable[Iterable[float]],
+            it2: Iterable[Iterable[float]],
+            places: Optional[int] = None,
+            msg: Any = None,
+            delta: Optional[float] = None,
+            it_type: Optional[Type[Iterable[Iterable[float]]]] = None,
+            sub_it_type: Optional[Type[Iterable[float]]] = None,
+    ) -> None:
         """An equality assertion for ordered iterables of iterables (like lists and tuples). Fail if the any two
            corresponding objects are unequal as determined by their difference rounded to the given number of decimal
            places (default 7) and comparing to zero, or by comparing that the difference between the two objects is more
