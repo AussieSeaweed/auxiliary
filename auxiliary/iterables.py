@@ -4,7 +4,7 @@ from itertools import chain
 from operator import add, mul
 from typing import Any, Optional, cast
 
-from auxiliary.typing import SupportsLessThan, _SM, _T
+from auxiliary.typing import SupportsLessThan, _SA, _SM, _T
 
 
 def windowed(it: Iterable[_T], width: int, step: int = 1, partial: bool = False) -> Iterator[Iterator[_T]]:
@@ -143,7 +143,7 @@ def unique(it: Iterable[Any]) -> bool:
         return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
 
 
-def sum_(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
+def sum_(values: Iterable[_SA], start: Optional[_SA] = None) -> _SA:
     """Calculates the sum of the elements in the iterable.
 
     :param values: The values to be summed.
