@@ -11,7 +11,7 @@ class UtilsTestCase(ExtendedTestCase):
 
     def test_get(self) -> None:
         self.assertEqual(get(300), 300)
-        self.assertRaises(ValueError, get, None)
+        self.assertRaises(TypeError, get, None)
 
     def test_default(self) -> None:
         self.assertEqual(default(300, 100), 300)

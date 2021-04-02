@@ -73,6 +73,7 @@ def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
     :param it: The iterator to get from.
     :param v: The previous value.
     :param loop: True to allow loop-around, else False.
+    :raises ValueError: If the value is the last element in the iterable and the looping is disabled.
     :return: The next value.
     """
     if not isinstance(it, Sequence):
@@ -86,7 +87,7 @@ def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
 
         return cast(_T, it[i])
     except IndexError:
-        raise ValueError('Last element')
+        raise ValueError('The value is the last element in the iterable.')
 
 
 def iter_equal(it1: Iterable[Any], it2: Iterable[Any]) -> bool:
@@ -148,12 +149,13 @@ def sum_(values: Iterable[_SA], start: Optional[_SA] = None) -> _SA:
 
     :param values: The values to be summed.
     :param start: The optional start value.
+    :raises ValueError: If the iterable is empty and the start value is not supplied.
     :return: The sum of the values.
     """
     try:
         return reduce(add, values if start is None else chain((start,), values))
     except TypeError:
-        raise ValueError('Invalid iterable')
+        raise ValueError('The iterable is empty and the start value is not supplied')
 
 
 def product(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
@@ -161,9 +163,10 @@ def product(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
 
     :param values: The values to be multiplied.
     :param start: The optional start value.
+    :raises ValueError: If the iterable is empty and the start value is not supplied.
     :return: The product of the values.
     """
     try:
         return reduce(mul, values if start is None else chain((start,), values))
     except TypeError:
-        raise ValueError('Invalid iterable')
+        raise ValueError('The iterable is empty and the start value is not supplied')
