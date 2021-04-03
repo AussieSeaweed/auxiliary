@@ -99,6 +99,7 @@ def iter_equal(it1: Iterable[Any], it2: Iterable[Any]) -> bool:
     """
     if not isinstance(it1, Collection):
         it1 = tuple(it1)
+
     if not isinstance(it2, Collection):
         it2 = tuple(it2)
 
@@ -136,9 +137,9 @@ def unique(it: Iterable[Any]) -> bool:
 
     if not it:
         return True
-    elif isinstance(it[0], Hashable):
+    elif all(isinstance(x, Hashable) for x in it):
         return len(it) == len(set(it))
-    elif isinstance(it[0], SupportsLessThan):
+    elif all(isinstance(x, SupportsLessThan) for x in it):
         return all(x != y for x, y in windowed(sorted(it), 2))
     else:
         return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
