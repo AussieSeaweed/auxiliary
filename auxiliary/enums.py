@@ -9,12 +9,6 @@ from typing import TypeVar
 class OrderedEnum(Enum):
     """OrderedEnum is the enum class for all ordered enums."""
 
-    def __lt__(self: _OE_co, other: _OE_co) -> bool:
-        if isinstance(other, type(self)):
-            return self.index < other.index
-        else:
-            return NotImplemented
-
     @cached_property
     def index(self) -> int:
         """
@@ -23,6 +17,12 @@ class OrderedEnum(Enum):
         values: tuple[OrderedEnum, ...] = tuple(type(self))
 
         return values.index(self)
+
+    def __lt__(self: _OE_co, other: _OE_co) -> bool:
+        if isinstance(other, type(self)):
+            return self.index < other.index
+        else:
+            return NotImplemented
 
 
 _OE_co = TypeVar('_OE_co', bound=OrderedEnum)
