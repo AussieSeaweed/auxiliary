@@ -11,7 +11,8 @@ class OrderedEnum(Enum):
 
     @cached_property
     def index(self) -> int:
-        """
+        """Returns the ordinal of this ordered enum element.
+
         :return: The index of this ordered enum element.
         """
         values: tuple[OrderedEnum, ...] = tuple(type(self))
