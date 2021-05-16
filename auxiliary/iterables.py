@@ -109,7 +109,7 @@ def iter_equal(it1: Iterable[Any], it2: Iterable[Any]) -> bool:
 def const(it: Iterable[Any]) -> bool:
     """Checks if all elements inside the iterable are equal to each other.
 
-       If the iterable is empty, True is returned.
+    If the iterable is empty, True is returned.
 
     :param it: The iterable.
     :return: True if all elements are equal, else False.
@@ -127,7 +127,7 @@ def const(it: Iterable[Any]) -> bool:
 def unique(it: Iterable[Any]) -> bool:
     """Checks if all elements inside the iterable are unique to each other.
 
-       If the iterable is empty, True is returned.
+    If the iterable is empty, True is returned.
 
     :param it: The iterable.
     :return: True if all elements are unique, else False.

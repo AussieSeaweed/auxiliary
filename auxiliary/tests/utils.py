@@ -39,14 +39,13 @@ class ExtendedTestCase(TestCase):
             it_type: Optional[Type[Iterable[float]]] = None,
     ) -> None:
         """An equality assertion for ordered iterables (like lists and tuples). Fail if the any two corresponding
-           objects are unequal as determined by their difference rounded to the given number of decimal places (default
-           7) and comparing to zero, or by comparing that the difference between the two objects is more than the given
-           delta.
+        objects are unequal as determined by their difference rounded to the given number of decimal places (default 7)
+        and comparing to zero, or by comparing that the difference between the two objects is more than the given delta.
 
-           Note that decimal places (from zero) are usually not the same as significant digits (measured from the most
-           significant digit).
+        Note that decimal places (from zero) are usually not the same as significant digits (measured from the most
+        significant digit).
 
-           If the two objects compare equal then they will automatically compare almost equal.
+        If the two objects compare equal then they will automatically compare almost equal.
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
@@ -107,14 +106,14 @@ class ExtendedTestCase(TestCase):
             sub_it_type: Optional[Type[Iterable[float]]] = None,
     ) -> None:
         """An equality assertion for ordered iterables of iterables (like lists and tuples). Fail if the any two
-           corresponding objects are unequal as determined by their difference rounded to the given number of decimal
-           places (default 7) and comparing to zero, or by comparing that the difference between the two objects is more
-           than the given delta.
+        corresponding objects are unequal as determined by their difference rounded to the given number of decimal
+        places (default 7) and comparing to zero, or by comparing that the difference between the two objects is more
+        than the given delta.
 
-           Note that decimal places (from zero) are usually not the same as significant digits (measured from the most
-           significant digit).
+        Note that decimal places (from zero) are usually not the same as significant digits (measured from the most
+        significant digit).
 
-           If the two objects compare equal then they will automatically compare almost equal.
+        If the two objects compare equal then they will automatically compare almost equal.
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
