@@ -15,7 +15,7 @@ setup(
     packages=find_packages(),
     package_data={'auxiliary': ('py.typed',)},
     classifiers=(
-        'License :: OSI Approved :: MIT License',
+        'LICENSE :: OSI APPROVED :: GNU GENERAL PUBLIC LICENSE V3 (GPLV3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3 :: Only',
