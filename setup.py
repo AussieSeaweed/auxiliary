@@ -5,7 +5,7 @@ with open('README.rst', 'r') as long_description_file:
 
 setup(
     name='auxiliary',
-    version='0.0.2.dev23',
+    version='0.0.2.dev24',
     author='Juho Kim',
     author_email='juho-kim@outlook.com',
     description='A Python package for various helper and utility functions',
@@ -15,7 +15,7 @@ setup(
     packages=find_packages(),
     package_data={'auxiliary': ('py.typed',)},
     classifiers=(
-        'LICENSE :: OSI APPROVED :: GNU GENERAL PUBLIC LICENSE V3 (GPLV3)',
+        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3 :: Only',
