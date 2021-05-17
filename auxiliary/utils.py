@@ -48,8 +48,8 @@ def get(optional: Optional[_T]) -> _T:
     """Checks if the optional value is not none and returns it.
 
     :param optional: The optional value.
-    :raises TypeError: If the checked value is None.
     :return: The checked value.
+    :raises TypeError: If the checked value is None.
     """
     if optional is None:
         raise TypeError('The checked value is None')

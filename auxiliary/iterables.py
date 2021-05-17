@@ -73,8 +73,8 @@ def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
     :param it: The iterator to get from.
     :param v: The previous value.
     :param loop: True to allow loop-around, else False.
-    :raises ValueError: If the value is the last element in the iterable and the looping is disabled.
     :return: The next value.
+    :raises ValueError: If the value is the last element in the iterable and the looping is disabled.
     """
     if not isinstance(it, Sequence):
         it = tuple(it)
@@ -150,8 +150,8 @@ def sum_(values: Iterable[_SA], start: Optional[_SA] = None) -> _SA:
 
     :param values: The values to be summed.
     :param start: The optional start value.
-    :raises ValueError: If the iterable is empty and the start value is not supplied.
     :return: The sum of the values.
+    :raises ValueError: If the iterable is empty and the start value is not supplied.
     """
     try:
         return reduce(add, values if start is None else chain((start,), values))
@@ -164,8 +164,8 @@ def product(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
 
     :param values: The values to be multiplied.
     :param start: The optional start value.
-    :raises ValueError: If the iterable is empty and the start value is not supplied.
     :return: The product of the values.
+    :raises ValueError: If the iterable is empty and the start value is not supplied.
     """
     try:
         return reduce(mul, values if start is None else chain((start,), values))
