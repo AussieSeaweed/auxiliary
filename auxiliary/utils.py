@@ -23,6 +23,7 @@ def bind(value: _SLT, lower: _SLT, upper: _SLT) -> _SLT:
     :param lower: The lower limit.
     :param upper: The upper limit.
     :return: The bound value.
+    :raises ValueError: If the lower bound is greater than the upper bound.
     """
     if upper < lower:
         raise ValueError('Lower bound is greater than the upper bound')
