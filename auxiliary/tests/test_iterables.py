@@ -1,8 +1,9 @@
 from itertools import chain
 from unittest import main
 
-from auxiliary import (ExtendedTestCase, after, chunked, const, flattened, iter_equal, product, rotated, sum_, trimmed,
-                       unique, windowed)
+from auxiliary import (
+    ExtendedTestCase, after, chunked, const, flattened, iter_equal, product, rotated, sum_, trimmed, unique, windowed,
+)
 
 
 class IterablesTestCase(ExtendedTestCase):
