@@ -16,6 +16,17 @@ def next_or_none(it: Iterator[_T]) -> Optional[_T]:
         return None
 
 
+def skipped(it: Iterator[_T]) -> Iterator[_T]:
+    """Skips the next element of the iterator.
+
+    :param it: The iterator to consume.
+    :return: The skipped iterator.
+    """
+    next(it)
+
+    return it
+
+
 def bind(value: _SLT, lower: _SLT, upper: _SLT) -> _SLT:
     """Binds the value by the given interval.
 
