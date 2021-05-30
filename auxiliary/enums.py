@@ -7,7 +7,10 @@ from typing import TypeVar
 
 @total_ordering
 class OrderedEnum(Enum):
-    """OrderedEnum is the enum class for all ordered enums."""
+    """OrderedEnum is the enum class for all ordered enums.
+
+    They can be compared with others compared by their indices.
+    """
 
     @cached_property
     def index(self) -> int:
