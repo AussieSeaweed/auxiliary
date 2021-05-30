@@ -2,7 +2,7 @@ from itertools import chain
 from unittest import main
 
 from auxiliary import (
-    ExtendedTestCase, after, chunked, const, flattened, iter_equal, product, rotated, sum_, trimmed, unique, windowed,
+    ExtendedTestCase, after, chunked, const, flattened, iter_equal, rotated, trimmed, unique, windowed,
 )
 
 
@@ -69,20 +69,6 @@ class IterablesTestCase(ExtendedTestCase):
         self.assertTrue(unique(([2, 1], [1, 1], [1, 2])))
         self.assertTrue(unique(range(10)))
         self.assertTrue(unique(iter(range(10))))
-
-    def test_sum(self) -> None:
-        self.assertEqual(sum_(iter(range(6))), 15)
-        self.assertEqual(sum_(range(1, 6)), 15)
-        self.assertEqual(sum_(range(1, 6), 1), 16)
-        self.assertEqual(sum_((), 1), 1)
-        self.assertRaises(ValueError, sum_, ())
-
-    def test_product(self) -> None:
-        self.assertEqual(product(iter(range(6))), 0)
-        self.assertEqual(product(range(1, 6)), 120)
-        self.assertEqual(product(range(1, 6), 1), 120)
-        self.assertEqual(product((), 1), 1)
-        self.assertRaises(ValueError, product, ())
 
 
 if __name__ == '__main__':

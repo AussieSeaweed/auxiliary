@@ -1,10 +1,8 @@
 from collections.abc import Collection, Hashable, Iterable, Iterator, Sequence
-from functools import reduce
 from itertools import chain
-from operator import add, mul
-from typing import Any, Optional, cast
+from typing import Any, cast
 
-from auxiliary.typing import SupportsLessThan, _SA, _SM, _T
+from auxiliary.typing import SupportsLessThan, _T
 
 
 def windowed(it: Iterable[_T], width: int, step: int = 1, partial: bool = False) -> Iterator[Iterator[_T]]:
@@ -12,8 +10,8 @@ def windowed(it: Iterable[_T], width: int, step: int = 1, partial: bool = False)
 
     :param it: The values to generate the window views on.
     :param width: The sliding window width.
-    :param step: The step of the window views.
-    :param partial: Allow partial view.
+    :param step: The step of the window views, defaults to 1.
+    :param partial: Allow partial view, defaults to False.
     :return: The window views.
     """
     if not isinstance(it, Sequence):
@@ -72,7 +70,7 @@ def after(it: Iterable[_T], v: _T, loop: bool = False) -> _T:
 
     :param it: The iterator to get from.
     :param v: The previous value.
-    :param loop: True to allow loop-around, else False.
+    :param loop: True to allow loop-around, else False, defaults to False.
     :return: The next value.
     :raises ValueError: If the value is the last element in the iterable and the looping is disabled.
     """
@@ -143,31 +141,3 @@ def unique(it: Iterable[Any]) -> bool:
         return all(x != y for x, y in windowed(sorted(it), 2))
     else:
         return all(all(it[i] != it[j] for j in range(len(it)) if i != j) for i in range(len(it)))
-
-
-def sum_(values: Iterable[_SA], start: Optional[_SA] = None) -> _SA:
-    """Calculates the sum of the elements in the iterable.
-
-    :param values: The values to be summed.
-    :param start: The optional start value.
-    :return: The sum of the values.
-    :raises ValueError: If the iterable is empty and the start value is not supplied.
-    """
-    try:
-        return reduce(add, values if start is None else chain((start,), values))
-    except TypeError:
-        raise ValueError('The iterable is empty and the start value is not supplied')
-
-
-def product(values: Iterable[_SM], start: Optional[_SM] = None) -> _SM:
-    """Calculates the product of the elements in the iterable.
-
-    :param values: The values to be multiplied.
-    :param start: The optional start value.
-    :return: The product of the values.
-    :raises ValueError: If the iterable is empty and the start value is not supplied.
-    """
-    try:
-        return reduce(mul, values if start is None else chain((start,), values))
-    except TypeError:
-        raise ValueError('The iterable is empty and the start value is not supplied')

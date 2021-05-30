@@ -46,14 +46,14 @@ def bind(value: _SLT, lower: _SLT, upper: _SLT) -> _SLT:
         return value
 
 
-def default(optional: Optional[_T], default_: _T) -> _T:
+def default(optional: Optional[_T], default_value: _T) -> _T:
     """Checks if the value is not None and returns it or the default value.
 
     :param optional: The optional value.
-    :param default_: The default value.
+    :param default_value: The default value.
     :return: The default value if the value to check is None, else the checked value.
     """
-    return default_ if optional is None else optional
+    return default_value if optional is None else optional
 
 
 def get(optional: Optional[_T]) -> _T:

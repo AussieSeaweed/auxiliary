@@ -19,8 +19,9 @@ class ExtendedTestCase(TestCase):
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
-        :param msg: Optional message to use on failure instead of a list of differences.
-        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
+        :param msg: Optional message to use on failure instead of a list of differences, defaults to None.
+        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced, defaults to
+            None.
         :return: None.
         """
         if it_type is not None:
@@ -49,10 +50,11 @@ class ExtendedTestCase(TestCase):
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
-        :param places: The places to enforce.
-        :param msg: Optional message to use on failure instead of a list of differences.
-        :param delta: The delta to enforce.
-        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
+        :param places: The places to enforce, defaults to None.
+        :param msg: Optional message to use on failure instead of a list of differences, defaults to None.
+        :param delta: The delta to enforce, defaults to None.
+        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced, defaults to
+            None.
         :return: None.
         """
         if isinstance(it1, Collection) and isinstance(it2, Collection):
@@ -70,7 +72,8 @@ class ExtendedTestCase(TestCase):
     def assert2DIterableEqual(
             self,
             it1: Iterable[Iterable[_T]],
-            it2: Iterable[Iterable[_T]], msg: Any = None,
+            it2: Iterable[Iterable[_T]],
+            msg: Any = None,
             it_type: Optional[Type[Iterable[Iterable[_T]]]] = None,
             sub_it_type: Optional[Type[Iterable[_T]]] = None,
     ) -> None:
@@ -78,9 +81,11 @@ class ExtendedTestCase(TestCase):
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
-        :param msg: Optional message to use on failure instead of a list of differences.
-        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
-        :param sub_it_type: The expected datatype of the sub-iterables, or None if no datatype should be enforced.
+        :param msg: Optional message to use on failure instead of a list of differences, defaults to None.
+        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced, defaults to
+            None.
+        :param sub_it_type: The expected datatype of the sub-iterables, or None if no datatype should be enforced,
+            defaults to None.
         :return: None.
         """
         if isinstance(it1, Collection) and isinstance(it2, Collection):
@@ -117,11 +122,13 @@ class ExtendedTestCase(TestCase):
 
         :param it1: The first iterable to compare.
         :param it2: The second iterable to compare.
-        :param places: The places to enforce.
-        :param msg: Optional message to use on failure instead of a list of differences.
-        :param delta: The delta to enforce.
-        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced.
-        :param sub_it_type: The expected datatype of the sub-iterables, or None if no datatype should be enforced.
+        :param places: The places to enforce, defaults to None.
+        :param msg: Optional message to use on failure instead of a list of differences, defaults to None.
+        :param delta: The delta to enforce, defaults to None.
+        :param it_type: The expected datatype of the iterables, or None if no datatype should be enforced, defaults to
+            None.
+        :param sub_it_type: The expected datatype of the sub-iterables, or None if no datatype should be enforced
+            defaults to None.
         :return: None.
         """
         if isinstance(it1, Collection) and isinstance(it2, Collection):
