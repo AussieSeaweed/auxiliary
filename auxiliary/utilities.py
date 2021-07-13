@@ -149,3 +149,15 @@ def bind(value, lower, upper):
         return upper
     else:
         return value
+
+
+def next_or_none(iterator):
+    """Consumes the iterator and returns the yielded value, or None, if the all elements in the iterator is consumed.
+
+    :param iterator: The iterator to optionally consume.
+    :return: The consumed value if possible, else None.
+    """
+    try:
+        return next(iterator)
+    except StopIteration:
+        return None

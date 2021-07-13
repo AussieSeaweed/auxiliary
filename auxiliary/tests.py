@@ -1,7 +1,7 @@
 from itertools import chain, repeat
 from unittest import TestCase, main
 
-from auxiliary import bind, chunk, const, distinct, flatten, prod, rotate, window
+from auxiliary import bind, chunk, const, distinct, flatten, next_or_none, prod, rotate, window
 
 
 class AuxiliaryTestCase(TestCase):
@@ -66,6 +66,10 @@ class AuxiliaryTestCase(TestCase):
         self.assertEqual(bind(-100, 0, 2), 0)
         self.assertEqual(bind(100, 0, 2), 2)
         self.assertRaises(ValueError, bind, 100, 2, 0)
+
+    def test_next_or_none(self):
+        self.assertEqual(next_or_none(iter(range(3))), 0)
+        self.assertIsNone(next_or_none(iter(())))
 
 
 if __name__ == '__main__':
