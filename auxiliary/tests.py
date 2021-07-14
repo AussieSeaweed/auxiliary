@@ -1,7 +1,7 @@
 from itertools import chain, repeat
 from unittest import TestCase, main
 
-from auxiliary import bind, chunk, const, distinct, flatten, next_or_none, prod, rotate, window
+from auxiliary import bind, chunk, const, distinct, flatten, next_or_none, prod, reverse_args, rotate, window
 
 
 class AuxiliaryTestCase(TestCase):
@@ -70,6 +70,13 @@ class AuxiliaryTestCase(TestCase):
     def test_next_or_none(self):
         self.assertEqual(next_or_none(iter(range(3))), 0)
         self.assertIsNone(next_or_none(iter(())))
+
+    def test_reverse_args(self):
+        self.assertEqual(reverse_args(range)(5, 1), range(1, 5))
+        self.assertEqual(reverse_args(dict)(foo='foo', bar='bar'), {'foo': 'foo', 'bar': 'bar'})
+        x, y = [], []
+        self.assertIs(max(x, y), x)
+        self.assertIs(reverse_args(max)(x, y), y)
 
 
 if __name__ == '__main__':

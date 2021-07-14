@@ -161,3 +161,13 @@ def next_or_none(iterator):
         return next(iterator)
     except StopIteration:
         return None
+
+
+def reverse_args(function):
+    """Returns a new function that, when invoked, reverses the arguments and passes it to the supplied function along
+    with any keyword arguments.
+
+    :param function: The function to wrap.
+    :return: The wrapped function.
+    """
+    return lambda *args, **kwargs: function(*args[::-1], **kwargs)
